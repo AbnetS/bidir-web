@@ -1,0 +1,104 @@
+<h3>Manage A-CAT
+   <small>create ,edit , delete acats.</small>
+</h3>
+
+
+<div class="panel panel-default" userpermission="['ACAT_BUILDER_ACAT_VIEW','ACAT_BUILDER_ACAT_CREATE','ACAT_BUILDER_ACAT_UPDATE']">
+   <div class="panel-body">
+      <div class="row">
+         <div class="col-xs-10 col-lg-12" userpermission="['ACAT_BUILDER_ACAT_CREATE']">
+            <p>
+               <a class="btn btn-success pull-right" ng-click="vm.addACAT()">
+                  <i class="fa fa-plus"></i>
+                  Add
+               </a>
+            </p>
+         </div>
+      </div>
+      <br/>
+      <div class="row">
+         <div ng-show="vm.acat_list.length>0" class="col-lg-12">
+            <md-toolbar class="md-table-toolbar md-default" ng-show="vm.filter.show">
+               <div class="md-toolbar-tools">
+                  <md-button class="md-icon-button" ng-click="vm.search()">
+                     <i class="fa fa-search"></i>
+                  </md-button>
+
+                  <!-- Input Text -->
+                  <md-input-container flex>
+                     <input id="search-input" type="text" ng-model="vm.query.search" />
+                  </md-input-container>
+
+                  <md-button class="md-icon-button" ng-click="vm.clearSearchText()">
+                     <i class="fa fa-times"></i>
+                  </md-button>
+               </div>
+            </md-toolbar>
+
+            <md-toolbar class="md-table-toolbar md-default" ng-hide="vm.filter.show">
+               <div class="md-toolbar-tools">
+                  <h2 class="md-title">A-CAT</h2>
+
+                  <div flex="" class="flex"></div>
+                  <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="vm.filter.show = true">
+                     <i class="fa fa-filter"></i>
+                     <div class="md-ripple-container"></div>
+                  </button>
+               </div>
+            </md-toolbar>
+
+            <md-table-container>
+               <table md-table md-progress="vm.promise">
+                  <thead md-head>
+                     <tr md-row>
+                        <th></th>
+                        <th md-column>
+                           <span>No</span>
+                        </th>
+                        <th md-column>
+                           <span>Title</span>
+                        </th>
+                        <th md-column>
+                           <span>Crop</span>
+                        </th>
+                        <th md-column>
+                           <span>Crop Category</span>
+                        </th>
+                        <th md-column>
+                           <span>Description</span>
+                        </th>
+                        <th md-column>
+                           <span>Action</span>
+                        </th>
+                     </tr>
+                  </thead>
+                  <tbody md-body>
+                     <tr md-row ng-repeat="acat in vm.acat_list | filter: vm.query.search | limitTo: vm.query.per_page : (vm.query.page -1) * vm.query.per_page ">
+                        <td></td>
+                        <td md-cell>{{vm.query.per_page * (vm.query.page - 1) + $index + 1}}</td>
+                        <td md-cell>{{acat.title}}</td>
+                        <td md-cell>{{acat.crop.name}}</td>
+                        <td md-cell>{{acat.crop.category}}</td>
+                        <td md-cell>{{acat.description}}</td>
+                        <td md-cell>
+                           <a userpermission="['ACAT_BUILDER_ACAT_UPDATE']" ng-click="vm.editACAT(acat,$event)">
+                              <i class="fa fa-edit"></i>
+                           </a>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </md-table-container>
+            <md-table-pagination md-limit="vm.query.per_page" md-limit-options="vm.pageSizes" md-page="vm.query.page" md-total="{{vm.acat_list.length}}" md-page-select="vm.options.pageSelect" md-boundary-links="vm.options.boundaryLinks" md-on-paginate="vm.paginate">
+            </md-table-pagination>
+         </div>
+         <div ng-show="vm.acat_list.length === 0" class="col-lg-12">
+            <h4 class="centerPageText">
+               PLEASE!
+               <strong>Add A-CAT FORMS</strong>
+               <a ui-sref="app.acatbuilder({id:0})"><i class="fa fa-plus"></i></a>
+            </h4>
+         </div>
+      </div>
+   </div>
+</div>

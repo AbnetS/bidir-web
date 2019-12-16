@@ -1,0 +1,230 @@
+<md-dialog style="min-width: 400px">
+    <md-toolbar class="small">
+        <div class="md-toolbar-tools small">
+            <h2>{{vm.isEdit? 'Edit ':'Add '}} Loan Product</h2>
+            <span flex></span>
+            <md-button aria-label="button" class="md-icon-button" ng-click="vm.cancel()">
+                <i class="icon-close"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content style="max-height:800px;">
+        <md-content class="md-padding" >
+            <form class="mb-xl" name="loanProductForm"  block-ui="LoanProductBlockUI">
+                <div class="form-group">
+                    <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                        <label>Loan Product *</label>
+                        <input id="name" name="name" ng-model="vm.loan_product.name" type="text"
+                               class="form-control required ng-pristine ng-valid ng-not-empty ng-touched"
+                               placeholder="enter name"
+                               aria-invalid="false">
+                    </div>
+                    <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                        <label>Max Loan Size *</label>
+                        <input id="maxLoanSizeInput" name="maxLoanSizeInput" ng-model="vm.loan_product.maximum_loan_amount"
+                               type="number" class="form-control required ng-pristine ng-valid ng-not-empty ng-touched"
+                               placeholder="enter maximum loan amount"
+                               aria-invalid="false">
+                    </div>
+                    <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4">
+                        <label>Currency * </label>
+                        <input id="currencyInput" name="currencyInput" ng-model="vm.loan_product.currency"
+                               type="text" class="form-control required ng-pristine ng-valid ng-not-empty ng-touched"
+                               placeholder="eg. ETB ,Dollar , Euro"
+                               aria-invalid="false">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <!--DEDUCTIBLE-->
+                    <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6"
+                         keypress-enter='vm.addToDeductibleList(vm.loan_product.deductible)'>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <md-input-container class="md-block">
+                                <md-radio-group id="deductibleType"
+                                                name="deductibleType"
+                                                layout="row"
+                                                ng-model="vm.loan_product.deductible.type"
+                                                ng-change="vm.onLPTypeChange(true)">
+                                    <md-radio-button class="md-primary" value="fixed_amount">
+                                        Fixed </md-radio-button>
+                                    <md-radio-button value="percent" >
+                                        Portion Of Loan</md-radio-button>
+                                </md-radio-group>
+                            </md-input-container>
+                        </div>
+                        <label class="col-xs-12 col-sm-12 col-md-12 col-lg-12">Deductibles</label>
+                        <div class="col-md-5">
+                                <input class="form-control"
+                                       ng-model="vm.loan_product.deductible.item"
+                                       type="text"
+                                       name="txt_deductible_item" placeholder="Deductible" required />
+                        </div>
+                        <div ng-show="vm.loan_product.deductible.type==='fixed_amount'" class="col-md-5">
+                                <input class="form-control"
+                                       ng-model="vm.loan_product.deductible.fixed_amount"
+                                       type="number"
+                                       name="txt_deductible_fixed_amount" placeholder="Amount" />
+                        </div>
+                        <div ng-show="vm.loan_product.deductible.type==='percent'" class="col-md-5">
+                            <input class="form-control"
+                                   ng-model="vm.loan_product.deductible.percent"
+                                   type="number"
+                                   min="0" max="100"
+                                   name="txt_deductible_percent" placeholder="Percent" />
+                        </div>
+
+                        <div class="col-md-2">
+                            <a ng-show="!vm.isEditDeductible" class="btn btn-success btn-outline"
+                               ng-disabled="loanProductForm.txt_deductible_item.$invalid"
+                               ng-click="vm.addToDeductibleList(vm.loan_product.deductible)">
+                                <i class="fa fa-plus"></i>
+                            </a>
+                            <a ng-show="vm.isEditDeductible" class="btn btn-inverse btn-outline"
+                               ng-click="vm.cancelEdit(true)">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <!--COST OF LOAN-->
+                    <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6"
+                         keypress-enter='vm.addToCostOfLoanList(vm.loan_product.costOfLoan)'>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <md-input-container class="md-block">
+                                <md-radio-group id="costOfLoanType"
+                                                name="costOfLoanType"
+                                                layout="row"
+                                                ng-model="vm.loan_product.costOfLoan.type"
+                                                ng-change="vm.onLPTypeChange(false)">
+                                    <md-radio-button class="md-primary" value="fixed_amount">
+                                        Fixed </md-radio-button>
+                                    <md-radio-button value="percent" >
+                                        Portion Of Loan</md-radio-button>
+                                </md-radio-group>
+                            </md-input-container>
+                        </div>
+                        <label class="col-xs-12 col-sm-12 col-md-12 col-lg-12">Cost Of Loan</label>
+
+                        <div class="col-md-5">
+                                <input class="form-control"
+                                       ng-model="vm.loan_product.costOfLoan.item"
+                                       type="text"
+                                       name="txt_costOfLoan_item" placeholder="Cost of loan" required/>
+                        </div>
+                        <div ng-show="vm.loan_product.costOfLoan.type==='fixed_amount'" class="col-md-5">
+                                <input class="form-control"
+                                       ng-model="vm.loan_product.costOfLoan.fixed_amount"
+                                       type="number"
+                                       min="0"
+                                       name="txt_costOfLoan_fixed_amount" placeholder="Amount" />
+                        </div>
+                        <div ng-show="vm.loan_product.costOfLoan.type==='percent'" class="col-md-5">
+                            <input class="form-control"
+                                   ng-model="vm.loan_product.costOfLoan.percent"
+                                   type="number"
+                                   min="0" max="100"
+                                   name="txt_costOfLoan_percent" placeholder="Percent" />
+                        </div>
+                        <div class="col-md-2">
+                            <a ng-show="!vm.isEditCostOfLoan" class="btn btn-success btn-outline"
+                                    ng-disabled="loanProductForm.txt_costOfLoan_item.$invalid"
+                                    ng-click="vm.addToCostOfLoanList(vm.loan_product.costOfLoan)">
+                                <i ng-class="vm.isEditCostOfLoan? 'fa fa-refresh':'fa fa-plus'"></i>
+                            </a>
+                            <a ng-show="vm.isEditCostOfLoan" class="btn btn-inverse btn-outline"
+                               ng-click="vm.cancelEdit(false)">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <!--DEDUCTIBLE-->
+                    <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6">
+                        <label>&nbsp;</label>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr class="bg-inverse-light">
+                                    <th>#</th>
+                                    <th>Deductible</th>
+                                    <th>Type</th>
+                                    <th>Amount/Percentage</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="cost in vm.loan_product.deductibles">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{cost.item}}</td>
+                                    <td>{{cost.type | ReplaceUnderscore }}</td>
+                                    <td>{{cost.fixed_amount > 0 ? cost.fixed_amount : cost.percent}}</td>
+                                    <td>
+                                        <a class="btn btn-xs btn-outline btn-default"
+                                           ng-click="vm.editDeductibleItem(cost)">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a  class="btn btn-xs btn-outline btn-danger"
+                                            ng-click="vm.removeLoanProductCostItem(cost,true)">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--COST OF LOAN-->
+                    <div class="col-xs-10 col-sm-6 col-md-6 col-lg-6">
+                        <label>&nbsp;</label>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                <tr class="bg-inverse-light">
+                                    <th>#</th>
+                                    <th>Cost of Loan</th>
+                                    <th>Type</th>
+                                    <th>Amount/Percentage</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="cost in vm.loan_product.cost_of_loan">
+                                    <td>{{$index + 1}}</td>
+                                    <td>{{cost.item}}</td>
+                                    <td>{{cost.type | ReplaceUnderscore}}</td>
+                                    <td>{{cost.fixed_amount > 0 ? cost.fixed_amount : cost.percent}}</td>
+                                    <td>
+                                        <a class="btn btn-xs btn-outline btn-default"
+                                           ng-click="vm.editCostOfLoanItem(cost)">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a  class="btn btn-xs btn-outline btn-danger"
+                                            ng-click="vm.removeLoanProductCostItem(cost,false)">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </md-content>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <div layout="row" layout-align="start" flex>
+            <md-button class="md-raised md-button-small md-ink-ripple" ng-click="vm.cancel()">
+                Cancel
+            </md-button>
+        </div>
+        <md-button class="md-raised md-primary md-button-small md-ink-ripple pull-right" ng-click="vm.saveLoanProduct()">
+            <i class="fa fa-save"></i> {{vm.isEdit? 'Update':'Save'}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

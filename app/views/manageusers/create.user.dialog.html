@@ -1,0 +1,136 @@
+<md-dialog flex="50">
+   <form role="form" name="vm.userForm" novalidate block-ui="CreateUserForm">
+      <md-toolbar class="small">
+         <div class="md-toolbar-tools small">
+            <h2>User</h2>
+            <span flex></span>
+            <md-button aria-label="button" class="md-icon-button" ng-click="vm.cancel()">
+               <i class="icon-close"></i>
+            </md-button>
+         </div>
+      </md-toolbar>
+
+      <md-dialog-content>
+         <md-content class="md-padding" block-ui="UserFormLoader">
+            <div class="row">
+               <!-- FIRST NAME -->
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-class="{false:'has-error'}[vm.UserValidationForm.Isfirst_nameValid]">
+                  <label class="control-label small">First Name</label>
+                  <span class="required" aria-required="true">*</span>
+                  <input name="inputFirstName" ng-model="vm.user.first_name" placeholder="First Name" type="text" class="form-control input-sm" required>
+               </div>
+               <!-- LAST NAME -->
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-class="{false:'has-error'}[vm.UserValidationForm.Islast_nameValid]">
+                  <label class="control-label small">Last Name</label>
+                  <span class="required" aria-required="true">*</span>
+                  <input name="inputLastName" ng-model="vm.user.last_name" placeholder="Last Name" type="text" class="form-control input-sm" required>
+               </div>
+               <!-- Grand Father Name -->
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <label class="control-label small">Grand Father Name</label>
+                  <input name="inputSurName" ng-model="vm.user.grandfather_name" placeholder="Grand Father Name" type="text" class="form-control input-sm">
+               </div>
+               <!-- Job Title -->
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <label class="control-label small">Job Title</label>
+                  <span class="required" aria-required="true">*</span>
+                  <input name="inputTitle" ng-model="vm.user.title" placeholder="Title" type="text" class="form-control input-sm">
+               </div>
+               <!-- Default Branch -->
+               <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-6" ng-class="{false:'has-error'}[vm.UserValidationForm.Isselected_default_branchValid]">
+                  <label class="control-label small">Based at Branch</label>
+                  <span class="control-label required" aria-required="true">*</span>
+                  <br/>
+                  <ui-select ng-model="vm.user.selected_default_branch" theme="bootstrap" on-select="vm.onSelectedDefaultBranch()" title="Choose default branch">
+                     <ui-select-match placeholder="Select or search a branch from the list...">
+                        {{$select.selected.name}} - {{$select.selected.location}}</ui-select-match>
+                     <ui-select-choices repeat="branch in vm.branches | filter: $select.search">
+                        <span ng-bind-html="branch.name | highlight: $select.search"></span>
+                        <small ng-bind-html="branch.location"></small>
+                     </ui-select-choices>
+                  </ui-select>
+               </div>
+
+               <!-- multi Branches && access branches-->
+               <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-6">
+                  <label class="mda-checkbox">
+                     <input type="checkbox" ng-model="vm.user.multi_branches">
+                     <em class="bg-green-500"></em>Access All Branches
+                  </label>
+                  <p></p>
+                  <!--access branches-->
+                  <ui-select ng-disabled="vm.user.multi_branches" multiple ng-model="vm.user.selected_access_branches" theme="bootstrap" close-on-select="false" style="width:100%">
+                     <ui-select-match placeholder="Select access branch...">
+                        {{$item.name}} - {{$item.location}}
+                     </ui-select-match>
+                     <ui-select-choices repeat="branch in vm.branches">
+                        <div ng-bind-html="branch.name | highlight: $select.search"></div>
+                        <small>
+                           location: {{branch.location}} branch type:
+                           <span ng-bind-html="''+ branch.branch_type | highlight: $select.search"></span>
+                        </small>
+                     </ui-select-choices>
+                  </ui-select>
+
+               </div>
+               <!--Hire Date-->
+               <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-6">
+                  <label class="control-label small">Hire Date</label>
+                  <span class="required" aria-required="true"></span>
+                  <p class="input-group">
+                     <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="vm.user.hired_date" is-open="vm.popup1.opened" datepicker-options="vm.dateOptions" ng-required="true" close-text="Close" alt-input-formats="vm.altInputFormats" />
+                     <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openDatePicker()">
+                           <i class="fa fa-calendar"></i>
+                        </button>
+                     </span>
+                  </p>
+               </div>
+
+               <!--Role-->
+               <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-6" ng-class="{false:'has-error'}[vm.UserValidationForm.Isselected_roleValid]">
+                  <label class="control-label small">Role</label>
+                  <span class="control-label required" aria-required="true">*</span>
+                  <md-select ng-model="vm.user.selected_role">
+                     <md-option>
+                        <em>None</em>
+                     </md-option>
+                     <md-option ng-repeat="role in vm.roles" ng-value="role">
+                        {{role.name}}
+                     </md-option>
+                  </md-select>
+               </div>
+
+               <!--Username-->
+               <div class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-6" ng-class="{false:'has-error'}[vm.UserValidationForm.IsusernameValid]">
+                  <label class="control-label small">Username</label>
+                  <span class="required" aria-required="true">*</span>
+                  <input ng-disabled="vm.isEdit" name="inputUsername" ng-model="vm.user.username" placeholder="Username" type="text" minlength="5" class="form-control input-sm" required>
+                  <span ng-show="vm.userForm.inputUsername.$error.minlength" class="text-danger help-block">username should be a min of 5 characters.</span>
+               </div>
+
+               <!--Password-->
+               <div ng-if="!vm.isEdit" class="form-group col-xs-10 col-sm-6 col-md-6 col-lg-6">
+                  <label class="control-label small">Password</label>
+                  <span class="required" aria-required="true">*</span>
+                  <input name="inputPassword" ng-model="vm.user.password" placeholder="Password" type="password" class="form-control input-sm" required>
+               </div>
+            </div>
+
+         </md-content>
+      </md-dialog-content>
+
+      <md-dialog-actions layout="row">
+
+         <div layout="row" layout-align="start" flex>
+            <md-button class="md-raised md-button-small md-ink-ripple" ng-click="vm.cancel()">
+               Cancel
+            </md-button>
+         </div>
+         <md-button class="md-raised md-primary md-button-small pull-right" ng-click="vm.saveUser()">
+            <i class="fa fa-save"></i> Save
+         </md-button>
+
+      </md-dialog-actions>
+   </form>
+</md-dialog>

@@ -1,0 +1,401 @@
+<div class="row" block-ui="acatTabBlockUI">
+
+   <div class="col-md-3" ng-show="vm.clientACATs.ACATs.length > 0">
+      <div class="panel b">
+         <div class="panel-heading  text-bold">
+            Crops
+         </div>
+         <div class="list-group">
+            <a class="list-group-item" ng-repeat="acat in vm.clientACATs.ACATs" ng-click="vm.ACATGroupOnClick(acat,$index)" ng-class="{'active': (acat === vm.selectedClientACAT && vm.visibility.showCropPanel)}">
+               <span class="circle circle-inverse mr"></span>
+               <span>{{acat.title}}</span>
+            </a>
+         </div>
+         <div class="panel-heading text-bold">Loan Proposal</div>
+         <div class="list-group">
+            <a class="list-group-item" ng-click="vm.onLoanProposalClick(vm.clientACATs.loan_product)" ng-class="{'active': (vm.visibility.showSummaryPanel)}">
+               <span class="circle circle-inverse mr"></span>
+               <span>Summary</span>
+            </a>
+         </div>
+      </div>
+   </div>
+   <div class="col-md-9">
+      <div class="col-lg-12" ng-show="vm.selectedClientACAT && vm.visibility.showCropPanel && !vm.visibility.showSummaryPanel">
+         <div class="pull-right">
+            <a ng-click="vm.downloadDocument(vm.selectedClientACAT)" class="btn btn-warning hidden-print">
+               <i class="icon-cloud-download"></i> Download
+            </a>
+            <a ng-click="vm.printLoanProcess(vm,'ACAT_CROP')" class="btn btn-default hidden-print">
+               <i class="icon-printer"></i>
+            </a>
+            <span class="label label-inverse" am-time-ago="vm.clientACATs.last_modified">Last Modified</span>
+         </div>
+      </div>
+      <div>
+         <!--IF CROP IS NOT SELECTED-->
+         <div ng-if="vm.clientACATs.ACATs.length>0 && !vm.visibility.showCropPanel && !vm.visibility.showSummaryPanel">
+            <h4 class="centerPageText">
+               PLEASE!
+               <strong>SELECT CROP FROM THE LEFT SIDE</strong>
+               <a><i class="fa fa-arrow-left"></i></a>
+            </h4>
+         </div>
+
+         <div ng-if="vm.clientACATs.ACATs.length>0 && vm.selectedClientACAT && vm.visibility.showCropPanel && !vm.visibility.showSummaryPanel">
+            <!--COST , REVENUE & YIELD CONSUPTION-->
+            <div class="panel b">
+               <div class="panel-heading bb">
+                  <h4 class="panel-title">{{vm.selectedClientACAT.title | uppercase}}</h4>
+               </div>
+               <!--TOTAL-->
+               <div>
+                  <div class="panel-body bt">
+                     <h4 class="b0">TOTAL</h4>
+                  </div>
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th></th>
+                           <th class="text-center">Estimated</th>
+                           <th class="text-right">Actual</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td class="text-left">Total Cost</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.estimated.total_cost | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.achieved.total_cost | number}}</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-left">Total Revenue</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.estimated.total_revenue | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.achieved.total_revenue| number}}</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-left">Net Income</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.estimated.net_income | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.achieved.net_income | number}}</div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+               </div>
+
+               <!--COST-->
+               <div>
+                  <div class="panel-body bt">
+                     <h4 class="b0">Cost</h4>
+                  </div>
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th></th>
+                           <th class="text-center">Estimated</th>
+                           <th class="text-right">Actual</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td class="text-left">Inputs</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.sections[0].sub_sections[0].estimated_sub_total | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.sections[0].sub_sections[0].achieved_sub_total | number}}</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-left">Labour Costs</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.sections[0].sub_sections[1].estimated_sub_total | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.sections[0].sub_sections[1].achieved_sub_total | number}}</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-left">Other Costs</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.sections[0].sub_sections[2].estimated_sub_total | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.sections[0].sub_sections[2].achieved_sub_total | number}}</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-left text-bold text-dark">Total</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.sections[0].estimated_sub_total | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.sections[0].achieved_sub_total | number}}</div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+               </div>
+               <!--Revenue-->
+               <div>
+                  <div class="panel-body bt">
+                     <h4 class="b0">Revenue</h4>
+                  </div>
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th class="text-left"></th>
+                           <th class="text-center">Estimated</th>
+                           <th class="text-right">Actual</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td class="text-left">Probable</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.sections[1].sub_sections[0].estimated_sub_total | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.sections[1].sub_sections[0].achieved_sub_total | number}}</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-left">Maximum</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.sections[1].sub_sections[1].estimated_sub_total | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.sections[1].sub_sections[1].achieved_sub_total | number}}</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-left">Minimum</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.sections[1].sub_sections[2].estimated_sub_total | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.sections[1].sub_sections[2].achieved_sub_total | number}}</div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+               </div>
+               <!--Yield Consumption-->
+               <div>
+                  <div class="panel-body bt">
+                     <h4 class="b0">Yield Consumption</h4>
+                  </div>
+                  <table class="table table-striped">
+                     <thead>
+                        <tr>
+                           <th class="text-left"></th>
+                           <th class="text-center">Estimated</th>
+                           <th class="text-right">Actual</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td class="text-left">Own Consumption</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.sections[1].sub_sections[0].yield_consumption.estimated.own_consumption | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.sections[1].sub_sections[0].yield_consumption.achieved.own_consumption | number}}</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-left">Seed Reserve</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.sections[1].sub_sections[0].yield_consumption.estimated.seed_reserve | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.sections[1].sub_sections[0].yield_consumption.achieved.seed_reserve | number}}</div>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td class="text-left">For Market</td>
+                           <td class="text-center">
+                              <small>{{vm.selectedClientACAT.sections[1].sub_sections[0].yield_consumption.estimated.for_market | number}}</small>
+                           </td>
+                           <td class="text-right">
+                              <div>{{vm.selectedClientACAT.sections[1].sub_sections[0].yield_consumption.achieved.for_market | number}}</div>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+
+               </div>
+            </div>
+            <!--ESTIMATED & ACTUAL NET CASH FLOW-->
+            <div class="panel b text-center">
+
+               <div class="panel-body bt">
+                  <div class="row">
+                     <div class="col-md-12 br">
+                        <label class="text-bold text-gray-darker pb-sm pt-sm">Estimated Net Cash Flow</label>
+                     </div>
+                     <!--Estimated Net Cash Flow-->
+                     <div class="col-md-12">
+                        <div ng-repeat="(key, value) in vm.selectedClientACAT.estimated.net_cash_flow" class="col-xs-4 col-md-2 br">
+                           <small class="center-block">{{key | uppercase}}</small>
+                           <strong>{{value | number}}</strong>
+                        </div>
+                     </div>
+                     <!--Actual Net Cash Flow-->
+                     <div class="col-md-12 br">
+                        <label class="text-bold text-gray-darker pb-sm pt-sm">Actual Net Cash Flow</label>
+                     </div>
+
+                     <div class="col-md-12">
+                        <div ng-repeat="(key, value) in vm.selectedClientACAT.achieved.net_cash_flow" class="col-xs-4 col-md-2 br">
+                           <small class="center-block">{{key | uppercase}}</small>
+                           <strong>{{value | number}}</strong>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+
+      </div>
+
+      <!--SHOW SUMMARY-->
+      <div ng-show="vm.clientACATs.ACATs.length>0 && vm.visibility.showSummaryPanel && !vm.visibility.showCropPanel">
+         <div class="col-lg-12">
+            <div class="pull-right">
+               <a ng-click="vm.printLoanProcess(vm,'ACAT_TOTAL')" class="btn btn-default hidden-print">
+                  <i class="icon-printer"></i>
+               </a>
+            </div>
+         </div>
+         <!--TOTAL-->
+         <div class="panel b">
+            <div class="panel-heading bb">
+               <h4 class="panel-title">TOTAL</h4>
+            </div>
+            <div class="panel-body bt">
+               <h4 class="b0">Total Estimated</h4>
+            </div>
+            <table class="table">
+               <tbody>
+                  <tr>
+                     <td>Total Revenue</td>
+                     <td>
+                        <div class="text-right text-bold">{{vm.clientACATs.estimated.total_revenue | number}}</div>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>Total Cost</td>
+                     <td>
+                        <div class="text-right text-bold">{{vm.clientACATs.estimated.total_cost | number}}</div>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>NET Income</td>
+                     <td>
+                        <div class="text-right text-bold">{{vm.clientACATs.estimated.net_income | number}}</div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+
+         </div>
+
+         <!--ESTIMATED NET CASH FLOW-->
+         <div class="panel b text-center">
+            <div class="panel-body bt">
+               <div class="row">
+                  <div class="col-md-12 br">
+                     <label class="text-bold text-gray-darker pb-sm pt-sm">Estimated Net Cash Flow</label>
+                  </div>
+                  <!--Estimated Net Cash Flow-->
+                  <div class="col-md-12">
+                     <div ng-repeat="(key, value) in vm.clientACATs.estimated.net_cash_flow" class="col-xs-4 col-md-2 br">
+                        <small class="center-block">{{key | uppercase}}</small>
+                        <strong>{{value | number}}</strong>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!--Loan Proposal Summary-->
+         <div class="panel b">
+            <div class="panel-heading bb">
+               <h4 class="panel-title">Loan Proposal Summary</h4>
+            </div>
+            <div class="panel-body bt">
+               <h4 class="b0">Loan Proposal</h4>
+            </div>
+            <table class="table">
+               <tbody>
+                  <tr>
+                     <td>Loan Requested</td>
+                     <td>
+                        <div class="text-right text-bold">{{vm.clientLoanProposals.loan_requested | number}}</div>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>Loan Proposed</td>
+                     <td>
+                        <div class="text-right text-bold">{{vm.clientLoanProposals.loan_proposed | number}}</div>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>Loan Approved</td>
+                     <td>
+                        <div class="text-right text-bold">{{vm.clientLoanProposals.loan_approved | number}}</div>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>Total Deductibles</td>
+                     <td>
+                        <div class="text-right text-bold">{{vm.clientLoanProposals.loan_detail.total_deductibles | number}}</div>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>Total Loan Costs</td>
+                     <td>
+                        <div class="text-right text-bold">{{vm.clientLoanProposals.loan_detail.total_cost_of_loan | number}}</div>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>Cash at hand</td>
+                     <td>
+                        <div class="text-right text-bold">{{vm.clientLoanProposals.loan_proposed - vm.clientLoanProposals.loan_detail.total_deductibles | number}}</div>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>Repayable</td>
+                     <td>
+                        <div class="text-right text-bold">{{vm.clientLoanProposals.repayable | number}}</div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+
+         </div>
+      </div>
+
+   </div>
+
+   <div class="col-md-12" ng-show="vm.clientACATs.ACATs.length === 0 || !vm.clientACATs.ACATs">
+      <h4 class="centerPageText">
+         <strong>CAN'T FIND A-CAT FOR SELECTED LOAN CYCLE...</strong>
+      </h4>
+   </div>
+</div>

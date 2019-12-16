@@ -1,0 +1,177 @@
+<h3>Core Banking
+   <small>List of clients.</small>
+</h3>
+
+<!-- ngRepeat + ngResource-->
+
+<div class="panel panel-flat">
+   <div class="panel-body">
+
+      <div class="row">
+
+         <!--CHECK BOX-->
+         <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4">
+            <label>Filter By</label>
+            <md-input-container class="md-block">
+               <md-radio-group layout="row" ng-model="vm.filter.allClient" ng-change="vm.onAllClientChange()">
+                  <md-radio-button value="false" class="md-primary">CBS Ready</md-radio-button>
+                  <md-radio-button value="true" class="md-primary">All Client</md-radio-button>
+               </md-radio-group>
+            </md-input-container>
+         </div>
+         <!--UI SELECT FOR BRANCH-->
+         <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4">
+            <label>Branch</label>
+            <ui-select ng-model="vm.currentUser.selected_access_branch" theme="bootstrap" on-select="vm.onSelectedBranch()" title="select branch" style="width: 100%;">
+               <ui-select-match allow-clear="true" placeholder="Select access branch to filter...">
+                  {{$select.selected.name}} - {{$select.selected.location}}
+               </ui-select-match>
+               <ui-select-choices repeat="branch in vm.currentUser.user_access_branches | filter: $select.search">
+                  <div ng-bind-html="branch.name | highlight: $select.search"></div>
+                  <small>
+                     <strong>location:</strong>{{branch.location}}
+                  </small>
+               </ui-select-choices>
+            </ui-select>
+         </div>
+         <!--SEARCH BOX-->
+         <div class="col-xs-10 col-sm-4 col-md-4 col-lg-4">
+            <label>Client Info</label>
+            <md-toolbar class="md-table-toolbar md-default">
+               <div class="md-toolbar-tools">
+
+                  <!-- Input Text -->
+                  <md-input-container flex>
+                     <input id="search-input" type="text" ng-model="vm.query.search" />
+                  </md-input-container>
+
+                  <md-button class="md-icon-button" ng-click="vm.clearSearch()">
+                     <i class="fa fa-times"></i>
+                  </md-button>
+               </div>
+            </md-toolbar>
+
+         </div>
+
+      </div>
+
+   </div>
+</div>
+
+<div class="vertical-splitter-xs"></div>
+
+<div class="panel panel-default ">
+   <div class="panel-body">
+      <md-table-container>
+         <table md-table md-progress="vm.clientPromise" class="table-hover">
+            <thead md-head class="bg-gray-lighter md-head">
+               <tr md-row>
+                  <th md-column style="width:3%;">
+                     <span>No</span>
+                  </th>
+                  <th md-column>
+                     <span>
+                        {{vm.IsAllChecked ? 'Uncheck All':'Check All'}}
+                     </span>
+                  </th>
+                  <th md-column style="width:30%;">
+                     <span>Full Name</span>
+                  </th>
+                  <th md-column style="width:10%;">
+                     <span>Status</span>
+                  </th>
+                  <th md-column style="width:25%">Branch ID</th>
+                  <th md-column style="width:20%;">Title</th>
+                  <th md-column></th>
+               </tr>
+
+               <tr md-row>
+                  <th md-column></th>
+                  <th md-column>
+                     <label ng-if="vm.clients.length>0" class="mda-checkbox">
+                        <input type="checkbox" ng-model="vm.IsAllChecked" ng-change="vm.CheckUncheckAll()" />
+                        <em class="bg-green-500"></em>
+                     </label>
+                  </th>
+                  <th md-column></th>
+                  <th md-column></th>
+                  <th colspan="2" md-column>
+                     <input ng-if="vm.clients.length>0" class="form-control" type="text" ng-model="vm.allBranchId" placeholder="Set Branch for all" />
+                  </th>
+                  <th md-column>
+                     <span ng-if="vm.clients.length>0" class="input-group-btn">
+                        <button class="btn btn-success" ng-click="vm.saveAllClients(vm.clients)">
+                           <i class="fa fa-paper-plane">  </i> Send</button>
+                     </span>
+                  </th>
+               </tr>
+            </thead>
+
+            <tbody md-body>
+               <tr md-row ng-repeat="client in vm.clients | filter : vm.query.search" ng-class="client.in_cbs?'':'active'" disabled="client.status !=='loan_granted'">
+                  <td md-cell>
+                     {{ $index + 1}}
+                  </td>
+                  <td md-cell>
+                     <label class="mda-checkbox" for="chkClient_{{client._id}}">
+                        <input ng-disabled="client.status !=='loan_granted'" id="chkClient_{{client._id}}" type="checkbox" ng-model="client.selected" ng-change="vm.CheckUncheckHeader()" />
+                        <em class="bg-green-500"></em>
+                     </label>
+                  </td>
+
+                  <td md-cell>
+                     <i ng-class="client.gender === 'male' || client.gender === 'Male'?'fa fa-2x fa-border fa-male':'fa fa-border fa-2x fa-female'"></i>
+                     <span>{{ client.first_name }} {{ client.last_name }} {{client.grandfather_name}}</span>
+
+                     <span class="label bg-gray">{{ client.branch.name }}</span>
+                  </td>
+                  <td md-cell>
+                     <label ng-class="vm.statusStyle(client.cbs_status)">{{client.cbs_status}}</label>
+                  </td>
+                  <td md-cell>
+                     <input ng-show="client.status ==='loan_granted' && client.cbs_status !== 'ACCEPTED'" class="form-control" type="text" ng-model="client.branchId" name="client_branch_id" placeholder="Branch Number Here" />
+                     <span class="text-center text-muted" ng-show="client.status !=='loan_granted'">
+                        NA
+                     </span>
+                     <span ng-show="client.status ==='loan_granted' && client.cbs_status === 'ACCEPTED'" class="text-center text-muted">
+                        {{client.branchId}}
+                     </span>
+                  </td>
+                  <td md-cell>
+                     <ui-select ng-show="client.status ==='loan_granted' && client.cbs_status !== 'ACCEPTED'" ng-model="client.title" theme="bootstrap" on-select="vm.onSelectedTitle(client)" title="Choose Title" reset-search-input="false" required="true" ng-maxlength="40">
+                        <ui-select-match placeholder="Select title from the list or add...">
+                           <span>{{$select.selected || $select.search}}</span>
+                           <a class="btn btn-xs btn-link pull-right" ng-click="vm.clear($event, $select)"></a>
+                        </ui-select-match>
+                        <ui-select-choices repeat="title in vm.titles | filter: $select.search" refresh="vm.refreshResults($select)" refresh-delay="0">
+                           <span ng-bind-html="title | highlight: $select.search"></span>
+                        </ui-select-choices>
+                     </ui-select>
+                     <span class="text-center text-muted" ng-show="client.status !=='loan_granted'">
+                        NA
+                     </span>
+                     <span ng-show="client.status ==='loan_granted' && client.cbs_status === 'ACCEPTED'" class="text-center text-muted">
+                        {{client.title}}
+                     </span>
+
+                  </td>
+                  <td md-cell>
+                     <span ng-show="client.status ==='loan_granted' && client.cbs_status !== 'ACCEPTED'" class="input-group-btn">
+                        <button class="btn btn-success" ng-click="vm.saveSingleClient(client)" type="button">
+                           <i class="fa fa-paper-plane"></i> 
+                        </button>
+                     </span>
+                     <span class="input-group-btn">
+                        <button class="btn btn-link" ng-click="vm.cbs_clientDetail(client)" type="button">
+                           <i class="fa fa-eye"></i> 
+                        </button>
+                     </span>
+
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </md-table-container>
+
+   </div>
+</div>

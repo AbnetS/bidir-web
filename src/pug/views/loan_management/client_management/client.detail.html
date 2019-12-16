@@ -1,0 +1,213 @@
+<h3>{{vm.client.first_name | uppercase}} {{vm.client.last_name | uppercase}}  Detail
+    <small>Manage clients information.</small>
+</h3>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <small>
+            <a ui-sref="app.clients"><i class="fa fa-arrow-left"></i> Back </a>
+        </small>
+        <div class="pull-right">
+            <label class="control-label">Loan Cycle</label>
+            <select  name="LoanCycleSelect"
+                     id="LoanCycleSelectId"
+                     ng-change="vm.onSelectedLoanCycle()"
+                     ng-model="vm.loanCycle">
+                <option  ng-repeat="lc in vm.loanCycles" value="{{lc.id}}">{{lc.name}}</option>
+            </select>
+        </div>
+    </div>
+<div class="panel-body" block-ui="ClientBlockUI">
+    <!--BASIC CLIENT INFORMATION-->
+    <div class="row">
+        <!--DETAIL-->
+        <div class="col-md-6">
+            <p class="lead bb">Details</p>
+            <form class="form-horizontal p-20">
+
+                <div class="form-group">
+                    <div class="col-sm-4">Name:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.first_name}} {{vm.client.last_name}} {{vm.client.grandfather_name}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Loan Cycle:</div>
+                    <div class="col-sm-8">
+                        <span class="label label-green">{{vm.clientScreening.client.loan_cycle_number | ordinal}}</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Gender:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.gender}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">National Id No:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.national_id_no}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Phone:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.phone}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Status:</div>
+                    <div class="col-sm-8">
+                        <span ng-class="vm.labelBasedOnStatus(vm.client.status)"> {{vm.client.status  | ReplaceUnderscore}}</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--EXTRA-->
+        <div class="col-md-6">
+            <p class="lead bb">Extra</p>
+            <form class="form-horizontal p-20">
+                <div class="form-group">
+                    <div class="col-sm-4">Branch:</div>
+                    <div class="col-sm-8">
+                        <strong>
+                            {{vm.client.branch.name}}
+                        </strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Created By:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.created_by.username}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Created Date:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.date_created | date:'medium'}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Last Updated:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.last_modified | date:'medium'}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Created By:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.created_by.username}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <a ng-show="!vm.visibility.showMoreClientDetail" ng-click="vm.visibility.showMoreClientDetail = !vm.visibility.showMoreClientDetail">
+                            {{vm.visibility.showMoreClientDetail?'Hide':'Show'}} Detail
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--Show More ClientDetail-->
+    <div ng-if="vm.visibility.showMoreClientDetail" class="row">
+        <div class="col-md-6">
+            <p class="lead bb">Address</p>
+            <form class="form-horizontal p-20">
+                <div class="form-group">
+                    <div class="col-sm-4">House Number:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.house_no}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">kebele:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.kebele}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Woreda:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.woreda}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">National Id Card:</div>
+                    <div class="col-sm-8">
+                        <div class="media">
+                            <img class="img-responsive thumb32"
+                                 ng-src="{{vm.client.national_id_card}}"
+                                 src="/app/img/user/02.jpg"
+                                 alt="Client Picture">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-4">Phone:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.phone}}</strong>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <p class="lead bb">Spouse</p>
+            <form class="form-horizontal p-20">
+                <div class="form-group">
+                    <div class="col-sm-4">First Name</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.spouse.first_name}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Last Name:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.spouse.last_name}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">Grand Father Name:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.spouse.grandfather_name}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">National Id No:</div>
+                    <div class="col-sm-8">
+                        <strong>{{vm.client.spouse.national_id_no}}</strong>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <a ng-show="vm.visibility.showMoreClientDetail" ng-click="vm.visibility.showMoreClientDetail = !vm.visibility.showMoreClientDetail">
+                            {{vm.visibility.showMoreClientDetail?'Hide':'Show'}} Detail
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--TAB STARTED-->
+    <div class="row">
+        <div ng-show="vm.visibility.showWarningForLoanCycle" ng-include="'historicLoanCycle'"></div>
+        <uib-tabset justified="true" active="vm.activeTabIndex">
+            <uib-tab index="tab.index" ng-repeat="tab in vm.tabsList"
+                     heading="{{tab.heading}}" ng-click="vm.onTabSelected()">
+                <ng-include src="tab.templateUrl"> </ng-include>
+            </uib-tab>
+    </div>
+</div>
+</div>
+
+
+
+<script type="text/ng-template" id="historicLoanCycle">
+    <div class="alert alert-inverse text-justify">
+        <em class="fa fa-exclamation-circle fa-lg fa-fw"></em>You are looking at historical data for the
+        <span class="badge bg-info">  {{ vm.loanCycle | ordinal}} </span>
+        loan cycle
+    </div>
+</script>

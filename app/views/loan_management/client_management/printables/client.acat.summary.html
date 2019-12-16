@@ -1,0 +1,244 @@
+<div class="table-content">
+
+
+   <h6 class="text-uppercase text-center">
+      {{vm.Title}}
+   </h6>
+   <p>
+      <strong>Client Name:</strong>{{vm.clientName}}</p>
+   <p>
+      <strong>Loan Cycle:</strong>{{vm.loanNumber}}</p>
+
+
+   <div class="row">
+
+      <div class="col-md-12">
+         <div class="panel panel-success b">
+            <div class="panel-heading bb">
+               <h4 class="panel-title">{{$index + 1 }}. {{vm.title | uppercase}}</h4>
+            </div>
+            <!--TOTAL-->
+            <div>
+               <div class="panel-body bt">
+                  <h4 class="b0">TOTAL</h4>
+               </div>
+               <table class="table">
+                  <thead>
+                     <tr>
+                        <th></th>
+                        <th class="text-center">Estimated</th>
+                        <th class="text-right">Actual</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td class="text-left">Total Cost</td>
+                        <td class="text-center">
+                           <small>{{vm.estimated.total_cost | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.achieved.total_cost | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">Total Revenue</td>
+                        <td class="text-center">
+                           <small>{{vm.estimated.total_revenue | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.achieved.total_revenue| number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">Net Income</td>
+                        <td class="text-center">
+                           <small>{{vm.estimated.net_income | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.achieved.net_income | number}}</div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+            </div>
+            <!--COST-->
+            <div>
+               <div class="panel-body bt">
+                  <h4 class="b0">Cost</h4>
+               </div>
+               <table class="table">
+                  <thead>
+                     <tr>
+                        <th></th>
+                        <th class="text-center">Estimated</th>
+                        <th class="text-right">Actual</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td class="text-left">Inputs</td>
+                        <td class="text-center">
+                           <small>{{vm.sections[0].sub_sections[0].estimated_sub_total | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.sections[0].sub_sections[0].achieved_sub_total | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">Labour Costs</td>
+                        <td class="text-center">
+                           <small>{{vm.sections[0].sub_sections[1].estimated_sub_total | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.sections[0].sub_sections[1].achieved_sub_total | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">Other Costs</td>
+                        <td class="text-center">
+                           <small>{{vm.sections[0].sub_sections[2].estimated_sub_total | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.sections[0].sub_sections[2].achieved_sub_total | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="text-left text-bold text-dark">Total</td>
+                        <td class="text-center">
+                           <small>{{vm.sections[0].estimated_sub_total | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.sections[0].achieved_sub_total | number}}</div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+            </div>
+            <!--Revenue-->
+            <div>
+               <div class="panel-body bt">
+                  <h4 class="b0">Revenue</h4>
+               </div>
+               <table class="table">
+                  <thead>
+                     <tr>
+                        <th class="text-left"></th>
+                        <th class="text-center">Estimated</th>
+                        <th class="text-right">Actual</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td class="text-left">Probable</td>
+                        <td class="text-center">
+                           <small>{{vm.sections[1].sub_sections[0].estimated_sub_total | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.sections[1].sub_sections[0].achieved_sub_total | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">Maximum</td>
+                        <td class="text-center">
+                           <small>{{vm.sections[1].sub_sections[1].estimated_sub_total | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.sections[1].sub_sections[1].achieved_sub_total | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">Minimum</td>
+                        <td class="text-center">
+                           <small>{{vm.sections[1].sub_sections[2].estimated_sub_total | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.sections[1].sub_sections[2].achieved_sub_total | number}}</div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+            </div>
+            <!--Yield Consumption-->
+            <div>
+               <div class="panel-body bt">
+                  <h4 class="b0">Yield Consumption</h4>
+               </div>
+               <table class="table">
+                  <thead>
+                     <tr>
+                        <th class="text-left"></th>
+                        <th class="text-center">Estimated</th>
+                        <th class="text-right">Actual</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr>
+                        <td class="text-left">Own Consumption</td>
+                        <td class="text-center">
+                           <small>{{vm.sections[1].sub_sections[0].yield_consumption.estimated.own_consumption | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.sections[1].sub_sections[0].yield_consumption.achieved.own_consumption | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">Seed Reserve</td>
+                        <td class="text-center">
+                           <small>{{vm.sections[1].sub_sections[0].yield_consumption.estimated.seed_reserve | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.sections[1].sub_sections[0].yield_consumption.achieved.seed_reserve | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td class="text-left">For Market</td>
+                        <td class="text-center">
+                           <small>{{vm.sections[1].sub_sections[0].yield_consumption.estimated.for_market | number}}</small>
+                        </td>
+                        <td class="text-right">
+                           <div>{{vm.sections[1].sub_sections[0].yield_consumption.achieved.for_market | number}}</div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+            </div>
+
+            <!--Estimated Net Cash Flow -->
+            <div>
+               <div class="panel-body">
+                  <h4 class="b0">Estimated Net Cash Flow</h4>
+               </div>
+               <div class="panel-body bt">
+                  <!--Estimated Net Cash Flow-->
+                  <div class="col-md-12 text-center">
+                     <div ng-repeat="(key, value) in vm.estimated.net_cash_flow" class="col-xs-4 col-md-2 br">
+                        <small class="center-block">{{key | uppercase}}</small>
+                        <strong>{{value | number}}</strong>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!--Actual Net Cash Flow -->
+            <div>
+               <div class="panel-body bt">
+                  <h4 class="b0">Actual Net Cash Flow</h4>
+               </div>
+               <div class="panel-body">
+                  <div class="col-md-12 text-center">
+                     <div ng-repeat="(key, value) in vm.achieved.net_cash_flow" class="col-xs-4 col-md-2 br">
+                        <small class="center-block">{{key | uppercase}}</small>
+                        <strong>{{value | number}}</strong>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+</div>

@@ -1,0 +1,34 @@
+<div class="col-lg-12 mt-xl" block-ui="groupMembersBlockUI">
+   <div class="col-lg-12 col-md-12 col-sm-12">
+      <a ng-click="vm.downloadMemberListDocument(vm.groupLoan.group)" class="mb-lg btn btn-warning">
+         <i class="icon-cloud-download"></i> Download
+      </a>
+   </div>
+   <!-- Aside panel-->
+   <div class="col-lg-4 col-md-4 col-sm-6" ng-repeat="member in vm.groupLoan.group.members">
+      <div class="panel b text-center">
+         <div class="panel-body">
+            <img class="img-circle thumb32" ng-src="{{member.picture}}" src="/app/img/user/02.jpg" alt="Client Picture">
+
+            <p class="h4 text-bold mb0">
+               {{member.first_name}} {{member.last_name}} {{member.grandfather_name}}</p>
+            <i ng-class="member.gender === 'male' || member.gender === 'Male'?'fa fa-lg fa-border fa-male bg-info-dark':'fa fa-border fa-lg fa-female bg-pink-dark'"></i>
+            <p> <b>Woreda: </b> {{member.woreda}} | <b> Kebele: </b> {{member.kebele}}</p>
+            <p class="small">Created on {{member.date_created | date}}</p>
+         </div>
+
+         <div class="panel-body bt">
+            <div class="row">
+               <div class="col-sm-4 br hidden-xs">
+                  <strong>{{member.loan_cycle_number | ordinal}} Cycle</strong>
+               </div>
+               <div class="col-sm-8">
+                  <span ng-class="vm.labelBasedOnStatus(member.status)">
+                     {{member.status | ReplaceUnderscore}}</span>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- end Aside panel-->
+</div>

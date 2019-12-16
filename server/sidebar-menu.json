@@ -1,0 +1,93 @@
+[
+  {
+    "text": "Main Navigation",
+    "permission": "Main_Navigation",
+    "heading": "true",
+    "translate": "sidebar.heading.HEADER",
+    "module": "all"
+  },
+  {
+    "text": "Welcome",
+    "sref": "app.welcome",
+    "icon": "icon-tag",
+    "module": "all"
+  },
+  {
+    "text": "Dashboard",
+    "sref": "app.dashboard",
+    "icon": "icon-speedometer",
+    "module": "DASHBOARD"
+  },
+  {
+    "text": "MFI Setup",
+    "module": "MFI_SETUP",
+    "sref": "#",
+    "icon": "fa fa-cogs",
+    "submenu": [
+      {"text": "MFI Setting",     "sref": "app.mfi_setting","permission": "MFI_SETUP_MFI"},
+      {"text": "Manage Branches",     "sref": "app.manage_branch","permission": "MFI_SETUP_BRANCH"},
+      {"text": "Loan Product",     "sref": "app.loanproduct" ,   "permission": "MFI_SETUP_LOAN_PRODUCT"}
+    ]
+  },
+  {
+    "text": "User Management",
+    "module": "USER_MANAGEMENT",
+    "sref": "#",
+    "icon": "fa fa-user",
+    "submenu": [
+      {"text": "Manage Users",     "sref": "app.manage_user" ,   "permission": "USER_MANAGEMENT_USER"},
+      {"text": "Manage Roles",     "sref": "app.manage_role",    "permission": "USER_MANAGEMENT_ROLE"}
+    ]
+  },
+  {
+    "text": "Loan Management",
+    "module": "CLIENT_MANAGEMENT",
+    "sref": "#",
+    "icon": "fa fa-spinner",
+    "submenu": [
+      {"text": "Individual Clients Management",   "sref": "app.clients" ,     "permission": "CLIENT_MANAGEMENT_CLIENT"},
+      {"text": "Group Management",     "sref": "app.group_loan" ,  "permission": "CLIENT_MANAGEMENT_CLIENT"}
+    ]
+  },
+  {
+    "text": "Forms",
+    "module": "FORM_BUILDER",
+    "sref": "#",
+    "icon": "fa fa-table",
+    "submenu": [
+      {"text": "Forms",     "sref": "app.forms" ,   "permission": "FORM_BUILDER_FORM"}
+    ]
+  },
+  {
+    "text": "A-CAT",
+    "module": "ACAT_BUILDER",
+    "sref": "#",
+    "icon": "fa fa-cubes",
+    "submenu": [
+      {"text": "Manage Crop",     "sref": "app.crop" ,   "permission": "ACAT_BUILDER_CROP"},
+      {"text": "A-CAT Builder",     "sref": "app.acat" ,   "permission": "ACAT_BUILDER_ACAT"}
+    ]
+  },
+  {
+    "text": "Geo Spatial",
+    "module": "GEOSPATIAL",
+    "sref": "#",
+    "icon": "fa fa-globe",
+    "submenu": [
+      {"text": "Branch Report",     "sref": "app.branch-report" ,  "permission": "GEOSPATIAL_BRANCH_REPORT" },
+      {"text": "Plot Report",     "sref": "app.plot-report",  "permission": "GEOSPATIAL_PLOT_REPORT"}
+    ]
+  },
+  {
+    "text": "Core Banking",
+    "module": "CBS_INTEGRATION",
+    "sref": "app.cbs",
+    "icon": "fa fa-university"
+  },
+  {
+    "text": "Report",
+    "module": "all",
+    "sref": "app.report",
+    "icon": "fa fa-bar-chart"
+  }
+]

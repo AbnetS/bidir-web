@@ -1,0 +1,37 @@
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h4 class="text-uppercase text-center">{{vm.report.title}}</h4>
+   </div>
+   <div class="panel-body">
+      <div class="table-responsive" block-ui="vm.reportBlockUI">
+         <table class="table table-hover table-bordered table-striped" ng-repeat="report in vm.reportData">
+            <thead class="bg-green">
+               <tr class="bg-green">
+                  <th colspan="7">{{report.client}}</th>
+               </tr>
+               <tr class="bg-gray-light">
+                  <th>Loan Cycle Number</th>
+                  <th>Estimated Total Cost</th>
+                  <th>Estimated Total Revenue</th>
+                  <th>Actual Total Cost</th>
+                  <th>Actual Total Revenue</th>
+                  <th>Loan Requested</th>
+                  <th>Loan Approved</th>
+               </tr>
+            </thead>
+
+            <tbody>
+               <tr ng-repeat="report in report.loan_cycles">
+                  <td>{{report.loan_cycle_no | number}}</td>
+                  <td>{{report.estimated_total_cost | number }}</td>
+                  <td>{{report.estimated_total_revenue | number}}</td>
+                  <td>{{report.actual_total_cost | number}}</td>
+                  <td>{{report.actual_total_revenue | number}}</td>
+                  <td>{{report.loan_requested | number}}</td>
+                  <td>{{report.loan_approved | number}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

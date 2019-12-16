@@ -1,0 +1,7 @@
+<div layout="row" layout-wrap flex>
+   <div flex="50" ng-repeat="option in questionData.options">
+      <md-checkbox ng-disabled="isReadonly" ng-checked="exists(option, questionData.values)" ng-click="toggle(option, questionData.values)">
+         {{ option }}
+      </md-checkbox>
+   </div>
+</div>

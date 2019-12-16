@@ -1,0 +1,35 @@
+<div ng-repeat="parameter in parameters">
+
+   <div class="form-group">
+      <p>{{parameter.name}}</p>
+      <div ng-if="parameter.type === 'SELECT'">
+         <ui-select ng-model="parameter.selected" theme="select2" title="Select Parameter" style="width: 100%;" ng-required="parameter.required">
+            <ui-select-match allow-clear="true" placeholder="Select...">
+               {{$select.selected.display}}</ui-select-match>
+            <ui-select-choices repeat="value in parameter.values | filter: $select.search">
+               <span ng-bind-html="value.display | highlight: $select.search"></span>
+            </ui-select-choices>
+         </ui-select>
+      </div>
+      <div ng-if="parameter.type === 'TEXT'">
+         <input class="form-control" ng-required="parameter.required" ng-model="parameter.selected" type="text" />
+      </div>
+      <div ng-if="parameter.type === 'SEARCH'">
+         <ui-select ng-model="parameter.selected" theme="bootstrap" title="Select Parameter" style="width: 100%;" ng-required="parameter.required">
+            <ui-select-match placeholder="Search...">{{$select.selected.display}}</ui-select-match>
+            <ui-select-choices refresh="searchParameters(parameter,$select.search)" refresh-delay="3" repeat="param in parameter.values | filter:$select.search">
+               <span ng-bind-html="param.display | highlight: $select.search"></span>
+            </ui-select-choices>
+            <!--                <ui-select-no-choice>Nothing found</ui-select-no-choice>-->
+         </ui-select>
+         <hr>
+      </div>
+      <div ng-if="parameter.type === 'NUMBER'">
+         <input class="form-control" ng-required="parameter.required" ng-model="parameter.selected" type="number" min="0" placeholder="0." />
+      </div>
+      <div ng-if="parameter.type === 'DATE'">
+         <input type="text" id="startDatePicker" ng-required="parameter.required" class="form-control input-sm" ng-model="parameter.selected" uib-datepicker-popup="dd-MMMM-yyyy" datepicker-options="vm.startDateConfig" ng-focus="vm.startDateConfig.open=true" minDate="vm.startDateConfig.minDate"
+         is-open="vm.startDateConfig.open" show-button-bar="false" />
+      </div>
+   </div>
+</div>

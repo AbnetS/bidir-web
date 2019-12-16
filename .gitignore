@@ -1,0 +1,11 @@
+.idea/
+node_modules/
+bower_components/
+.tmp/
+.vscode/
+build/
+dist/
+node_modules/
+src/debug.log
+vendor/
+.scannerwork/

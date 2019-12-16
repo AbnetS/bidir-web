@@ -1,0 +1,47 @@
+<md-dialog style="min-width: 500px">
+    <form role="form" name="vm.TaskForm" novalidate >
+        <md-toolbar class="small">
+            <div class="md-toolbar-tools small">
+                <h2>Task Detail</h2>
+                <span flex></span>
+                <md-button aria-label="button" class="md-icon-button" ng-click="vm.cancel()">
+                    <i class="icon-close"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content style="width:500px;max-height:700px;">
+            <md-content class="md-padding">
+                <div class="list-group mb0">
+                    <div class="list-group-item" >
+                        <h4><em class="fa fa-fw fa-user mr"></em>{{vm.userInfo.first_name}} {{vm.userInfo.last_name}}</h4>
+                        <h5>Task: {{vm.task.task}}</h5>
+                        Role:<span class="label label-inverse"> {{vm.userInfo.role.name}}</span>
+                        Status:<span class="label label-inverse"> {{vm.userInfo.user.status}}</span>
+                        <span class="label label-info pull-right">Last Updated: {{vm.task.last_modified | date:'medium'}}</span>
+                    </div>
+                </div>
+                <br/>
+                <textarea ng-disabled="vm.task.status === 'done'" class="form-control ng-pristine ng-valid ng-empty ng-touched"
+                          ng-trim="true" ng-model="vm.task.comment"
+                          placeholder="Type reason for changing task status.." rows="5" aria-invalid="false"
+                          style=""></textarea>
+            </md-content>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <div layout="row" layout-align="start" flex>
+                <md-button class="md-raised md-button-small md-ink-ripple" ng-click="vm.cancel()">
+                    Cancel
+                </md-button>
+            </div>
+            <md-button ng-hide="vm.task.status === 'done'"  md-no-ink class="md-warning " ng-click="vm.declineUser()">
+                Decline
+            </md-button>
+            <md-button ng-hide="vm.task.status === 'done'" class="md-raised md-primary md-button-small md-ink-ripple pull-right"
+                       ng-click="vm.approveUser()">
+                <i class="fa fa-save"></i> Approve
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

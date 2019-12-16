@@ -1,0 +1,113 @@
+<h3>Dashboard</h3>
+
+<div ng-show="vm.visibility.countLoading">
+   <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+   <div class="alert small alert-info">Fetching count data.....</div>
+</div>
+<div ng-hide="vm.visibility.countLoading" class="row">
+
+   <div class="col-lg-2 col-sm-6">
+      <!-- START widget-->
+      <div class="panel widget bg-primary">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-primary-dark pv-lg">
+               <em class="icon-speedometer fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <div class="h2 mt0">{{vm.counts.branches}}</div>
+               <div class="text-uppercase">Branches</div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-lg-2 col-sm-6">
+      <!-- START widget-->
+      <div class="panel widget bg-success">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-success-dark pv-lg">
+               <em class="icon-people fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <div class="h2 mt0">{{vm.counts.individualClients}}</div>
+               <div class="text-uppercase">Clients</div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-lg-2 col-sm-6">
+      <!-- START widget-->
+      <div class="panel widget bg-success">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-success-dark pv-lg">
+               <em class="fa fa-users fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <div class="h2 mt0">{{vm.counts.groupClients}}</div>
+               <div class="text-uppercase">Groups</div>
+            </div>
+         </div>
+      </div>
+   </div>፟
+   <div class="col-lg-2 col-md-6">
+      <!-- START widget-->
+      <div class="panel widget bg-green">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-green-dark pv-lg">
+               <em class="icon-user fa-3x"></em>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <div class="h2 mt0">{{vm.counts.users}}</div>
+               <div class="text-uppercase">Users</div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="col-lg-2 col-md-6">
+      <!-- START date widget-->
+      <div class="panel widget">
+         <div class="row row-table">
+            <div class="col-xs-4 text-center bg-green pv-lg">
+               <now class="text-sm" format="MMMM"></now>
+               <br/>
+               <now class="h2 mt0" format="d"></now>
+            </div>
+            <div class="col-xs-8 pv-lg">
+               <now class="text-uppercase" format="EEEE"></now>
+               <br/>
+               <now class="h2 mt0" format="h:mm"></now>
+               <now class="text-muted text-sm" format="a"></now>
+            </div>
+         </div>
+      </div>
+      <!-- END date widget-->
+   </div>
+
+
+</div>
+
+
+
+
+<div ng-show="vm.visibility.chartLoading">
+   <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+   <div class="alert small alert-info">Fetching reports.....</div>
+</div>
+<div ng-hide="vm.visibility.chartLoading" class="row mb-lg">
+   <div ng-repeat="report in vm.reports">
+      <div ng-if="report.type === 'PIE'" class="col-lg-6 col-sm-12">
+         <h4 class="text-center">{{report.name}}</h4>
+         <div class="col-lg-8 col-lg-offset-2">
+            <canvas class="chart chart-pie" id="pie" chart-data="report.data" chart-labels="report.labels" chart-colors="vm.pieColors" chart-options="options" legend="true"></canvas>
+         </div>
+      </div>
+      <div ng-if="report.type === 'BAR'" class="col-lg-6 col-sm-12">
+         <h4 class="text-center">{{report.name}}</h4>
+         <div class="col-lg-10 col-lg-offset-1">
+            <canvas class="chart chart-bar" id="bar" chart-data="report.data" chart-labels="report.labels" chart-series="report.series" legend="true"></canvas>
+         </div>
+      </div>
+
+   </div>
+
+</div>

@@ -1,0 +1,46 @@
+{
+  "global": {
+    "app_version": "1.0"
+  },
+  "env": {
+    "development": {
+      "public": {
+        "EnvironmentConfig": {
+          "BaseUrl": "http://api.test.bidir.gebeya.co/",
+          "SeasonalMonitoringBaseUrl": "http://seasmon.wenr.wur.nl/cgi-bin/register.py?",
+          "SeasmonBaseUrl": "http://seasmon.wenr.wur.nl/html/"
+        }
+      },
+      "local": {
+        "EnvironmentConfig": {
+          "BaseUrl": "http://api.buusaa-bidir.local/",
+          "SeasonalMonitoringBaseUrl": "http://seasmon.wenr.wur.nl/cgi-bin/register.py?",
+          "SeasmonBaseUrl": "http://seasmon.wenr.wur.nl/html/"
+        }
+      }
+    },
+    "burundi": {
+      "public": {
+        "EnvironmentConfig": {
+          "BaseUrl": "http://api.dev.burundi.bidir.gebeya.co/",
+          "SeasonalMonitoringBaseUrl": "http://seasmon.wenr.wur.nl/cgi-bin/register.py?",
+          "SeasmonBaseUrl": "http://seasmon.wenr.wur.nl/html/"
+        }
+      },
+      "local": {
+        "EnvironmentConfig": {
+          "BaseUrl": "http://api.dev.burundi.bidir.gebeya.co/",
+          "SeasonalMonitoringBaseUrl": "http://seasmon.wenr.wur.nl/cgi-bin/register.py?",
+          "SeasmonBaseUrl": "http://seasmon.wenr.wur.nl/html/"
+        }
+      }
+    },
+    "production": {
+      "EnvironmentConfig": {
+        "BaseUrl": "http://api.test.bidir.gebeya.co/",
+        "SeasonalMonitoringBaseUrl": "http://seasmon.wenr.wur.nl/cgi-bin/register.py?",
+        "SeasmonBaseUrl": "http://seasmon.wenr.wur.nl/html/"
+      }
+    }
+  }
+}

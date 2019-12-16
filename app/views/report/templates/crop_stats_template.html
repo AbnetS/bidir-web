@@ -1,0 +1,29 @@
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h4 class="text-uppercase text-center">{{vm.report.title}}</h4>
+   </div>
+   <div class="panel-body">
+      <div class="table-responsive" block-ui="vm.reportBlockUI">
+         <table class="table table-hover table-bordered table-striped">
+            <thead class="bg-green">
+               <!--<tr class="bg-green">-->
+               <!--<th colspan="7">{{report.client}}</th>-->
+               <!--</tr>-->
+               <tr class="bg-gray-light">
+                  <th>crop</th>
+                  <th>No. of Clients</th>
+                  <th>Loan Amount</th>
+               </tr>
+            </thead>
+
+            <tbody>
+               <tr ng-repeat="report in vm.reportData">
+                  <td>{{report.crop | ReplaceUnderscore}}</td>
+                  <td>{{report.no_of_clients | number }}</td>
+                  <td>{{report.total_loan_amount | number}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

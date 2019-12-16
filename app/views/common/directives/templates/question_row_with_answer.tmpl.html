@@ -1,0 +1,45 @@
+<div ng-switch on="questionRowData.type">
+   <div ng-switch-when="GROUPED">
+      <!-- code to render grouped type questions-->
+      <div class="row">
+         <div class="col-md-12">
+            <strong>
+               <i ng-if="parentRowNo != null">{{parentRowNo}}.</i>{{rowNo}}. {{questionRowData.question_text}}
+            </strong>
+         </div>
+         <div>
+            <div class="col-md-1">
+
+            </div>
+            <div class="col-md-11">
+               <question-row-with-answer ng-repeat="question in questionRowData.sub_questions" question-row-data="question" layout-data="'TWO_COLUMNS'" parent-row-no="rowNo" row-no="$index + 1" is-subquestion="true">
+               </question-row-with-answer>
+            </div>
+         </div>
+
+
+      </div>
+
+   </div>
+   <div ng-switch-default>
+      <!-- code to render other type questions-->
+      <div class="row" ng-class="{'true' : 'italic-font'}[isSubquestion]">
+         <div class="col-md-8 wordwrap">
+            <strong><i ng-if="parentRowNo != null">{{parentRowNo}}.</i>{{rowNo}}.</strong>
+            <strong>{{questionRowData.question_text}}</strong>
+            <br>
+            <small ng-if="questionRowData.remark" class="italic-font">(Remark: {{questionRowData.remark}})</small>
+         </div>
+         <div class="col-md-4">
+            <strong ng-repeat="value in questionRowData.values">{{value}} &nbsp;</strong>
+            <span ng-if="questionRowData.options && questionRowData.options.length != 0">
+               <br>
+               <small>(
+                  <small class="italic-font" ng-repeat="option in questionRowData.options">{{option}}<i ng-if="!$last">,&nbsp;</i>
+                  </small>)</small>
+            </span>
+         </div>
+      </div>
+
+   </div>
+</div>

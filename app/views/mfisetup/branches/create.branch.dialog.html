@@ -1,0 +1,91 @@
+<md-dialog flex="55">
+   <form role="form" name="vm.branchForm" novalidate block-ui="CreateBranchBlockUI">
+      <md-toolbar class="small">
+         <div class="md-toolbar-tools small">
+            <h2>{{vm.isEdit?'Update':'Add'}} Branch</h2>
+            <span flex></span>
+            <md-button aria-label="button" class="md-icon-button" ng-click="vm.cancel()">
+               <i class="icon-close"></i>
+            </md-button>
+         </div>
+      </md-toolbar>
+
+      <md-dialog-content>
+         <md-content class="md-padding">
+            <div class="row">
+               <!--NAME -->
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6 required" ng-class="{false:'has-error'}[vm.MFIBranchForm.IsnameValid]">
+                  <label class="control-label small">Name</label>
+                  <span class="required" aria-required="true">*</span>
+                  <input name="inputName" id="inputName" ng-model="vm.branch.name" placeholder="Name" type="text" class="form-control" required>
+               </div>
+               <!-- Location -->
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6" ng-class="{false:'has-error'}[vm.MFIBranchForm.IslocationValid]">
+                  <label class="control-label small">District/Location</label>
+                  <span class="required" aria-required="true">*</span>
+                  <input type="text" id="inputLocation" name="inputLocation" placeholder="District" ng-model="vm.branch.location" class="form-control" required>
+               </div>
+               <!-- Phone -->
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <label class="control-label small">Phone</label>
+                  <input type="text" id="inputPhone" ng-model="vm.branch.phone" placeholder="Phone number" class="form-control" name="inputPhone" ui-mask="(999) 999-999999" ui-mask-placeholder ui-mask-placeholder-char="_" ui-options="{allowInvalidValue:false,clearOnBlur:false}"
+                  required>
+               </div>
+               <!-- Opening Date -->
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <label class="control-label small">Opening Date</label>
+                  <p class="input-group">
+                     <input placeholder="Enter Opening Date" type="text" id="inputOpeningDate" class="form-control" uib-datepicker-popup="{{vm.format}}" ng-model="vm.branch.opening_date" is-open="vm.popup1.opened" datepicker-options="vm.dateOptions" ng-required="true" close-text="Close"
+                     alt-input-formats="vm.altInputFormats" />
+                     <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openDatePicker()">
+                           <i class="fa fa-calendar"></i>
+                        </button>
+                     </span>
+                  </p>
+               </div>
+               <!-- Email -->
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <label class="control-label small">Email</label>
+                  <input type="email" id="inputEmail" placeholder="Enter Email" ng-model="vm.branch.email" class="form-control" name="inputEmail">
+               </div>
+               <!-- Branch Type: -->
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <label class="control-label small">Branch Type</label>
+                  <md-select ng-model="vm.branch.branch_type">
+                     <md-option ng-repeat="branchType in vm.branchTypes" ng-value="branchType">
+                        {{branchType}}
+                     </md-option>
+                  </md-select>
+               </div>
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <!--Empty div for shifting branch u-->
+               </div>
+               <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                  <label class="control-label small">Woredas</label>
+                  <ui-select multiple ng-model="vm.branch.selectedWoredas" theme="bootstrap" close-on-select="false" style="width:100%">
+                     <ui-select-match placeholder="Select Woredas...">
+                        {{$item.w_name}}
+                     </ui-select-match>
+                     <ui-select-choices repeat="woreda in vm.woredas">
+                        <div ng-bind-html="woreda.w_name | highlight: $select.search"></div>
+                     </ui-select-choices>
+                  </ui-select>
+               </div>
+            </div>
+         </md-content>
+      </md-dialog-content>
+
+
+      <md-dialog-actions layout="row">
+         <div layout="row" layout-align="start" flex>
+            <md-button class="md-raised md-button-small md-ink-ripple" ng-click="vm.cancel()">
+               Cancel
+            </md-button>
+         </div>
+         <md-button class="md-raised md-primary md-button-small md-ink-ripple pull-right" ng-click="vm.saveBranch()">
+            <i class="fa fa-save"></i> {{vm.isEdit? 'Update':'Save'}}
+         </md-button>
+      </md-dialog-actions>
+   </form>
+</md-dialog>

@@ -1,0 +1,144 @@
+<md-dialog class="print-modal" aria-label="Printables" ng-cloak>
+   <style type="text/css">
+      table,
+        figure,
+        .table-content {
+            page-break-inside: auto;
+        }
+        
+        body {
+            padding: 5%;
+            -webkit-print-color-adjust: exact;
+        }
+        
+        img,
+        table {
+            max-width: 100%;
+        }
+        
+        .table-condensed>thead>tr>th,
+        .table-condensed>tbody>tr>th,
+        .table-condensed>tfoot>tr>th,
+        .table-condensed>thead>tr>td,
+        .table-condensed>tbody>tr>td,
+        .table-condensed>tfoot>tr>td {
+            padding: 1px;
+        }
+        
+        .chart-ribbon {
+            background-color: #d8d8d8 !important;
+            padding: 3px;
+            margin: 0;
+        }
+        
+        .uppercase {
+            text-transform: uppercase!important
+        }
+        
+        .wrap-all {
+            word-break: break-all;
+        }
+        
+        h2 {
+            font-size: 10pt;
+            font-weight: 800;
+            margin: 5px 0px 5px;
+        }
+        
+        .semibold {
+            font-weight: 600;
+        }
+        
+        .print-header .char-label {
+            width: 15px;
+            display: inline-block;
+        }
+        
+        * {
+            font-size: 9pt;
+        }
+        
+        .ib {
+            display: inline-block;
+        }
+        
+        .table-content {
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .table-content .table:first-child {
+            margin-top: 0px;
+        }
+        
+        .table-content .row:first-child {
+            border-top: 1px solid #AAA;
+        }
+        
+        .table-content .header-row {
+            -webkit-print-color-adjust: exact;
+            font-weight: 800;
+            background-color: #E8E8E8 !important;
+        }
+        
+        .table-content .small-header-row {
+            -webkit-print-color-adjust: exact;
+            font-weight: 400;
+            font-size: 8pt;
+            background-color: #E8E8E8 !important;
+        }
+        
+        .table-content .row {
+            border-bottom: 1px solid #AAA;
+        }
+
+        .italic-font {
+            font-style: italic;
+        }
+        .img-logo-thumbnail {
+            display:block; margin:auto;
+        }
+
+        .header-title h2,
+        .header-title h3 {
+            display: inline-block;
+        }
+        small,
+        .small {
+            font-size: 80%;
+        }
+        .ib {
+            display: inline-block;
+        }
+   </style>
+   <md-dialog-content>
+      <div class="container-fluid print-container" id="printableDiv">
+         <div class="row">
+            <div class="col-xs-12 " ng-if="ShowLogoOnPrintOut">
+               <img id="Logo" src="http://bidir-api-bucket.storage.googleapis.com/assets/BUUSAA_GONOFAA_MICROFINANCE_SHARE_COMPANY_28713d14d76c.png" class="img-logo-thumbnail" alt="mfi logo" width="20%" height="100%">
+            </div>
+            <div class="col-xs-12 text-center">
+               <h5>{{Name}}</h5>
+               <h6>
+                  <strong>Location:</strong>{{Address.Location}}
+                  <strong>&nbsp;&nbsp; Phone Number:</strong>{{Address.Phonenumber}}</h6>
+            </div>
+         </div>
+
+         <div ng-repeat="printable in printables" ng-include="printable.TemplateUrl">
+            <div ng-include src="printable.TemplateUrl" onLoad="vm=printable.Data"></div>
+         </div>
+
+
+      </div>
+   </md-dialog-content>
+   <md-dialog-actions layout="row">
+      <md-button ng-click="cancel()">
+         Cancel
+      </md-button>
+      <md-button ng-click="print('printableDiv')">
+         Print
+      </md-button>
+   </md-dialog-actions>
+   </form>
+</md-dialog>

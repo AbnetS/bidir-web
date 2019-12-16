@@ -1,0 +1,102 @@
+<div class="container-md">
+   <div class="row">
+      <div class="col-md-3">
+         <div class="panel b">
+            <div class="panel-heading bg-gray-lighter text-bold">User Settings</div>
+            <div class="list-group" ng-init="settingActive = 1">
+               <a class="list-group-item" href="" ng-click="settingActive=1" ng-class="{'active': (settingActive == 1)}">Profile</a>
+               <a class="list-group-item" href="" ng-click="settingActive=2" ng-class="{'active': (settingActive == 2)}">Account</a>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-9">
+         <div ng-show="settingActive == 1">
+            <div class="panel b">
+               <div class="panel-heading bg-gray-lighter text-bold">Profile</div>
+               <div class="panel-body">
+                  <form name="ProfileForm" block-ui="UserProfileBlockUI">
+                     <div class="col-md-6">
+                        <div class="main-img-preview">
+                           <img ng-show="vm.picFile" ngf-thumbnail="vm.picFile" class="thumbnail img-preview" title="Preview Logo">
+                           <img ng-hide="vm.picFile" ng-src="{{vm.user.picture}}" src="app/img/no-img.png" class="thumbnail img-preview" title="Preview Logo">
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <label>Logo *</label>
+                        <input class="form-control inline" type="file" ngf-select ng-model="vm.picFile" name="mfi_logo" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFile">
+
+                        <i ng-show="ProfileForm.file.$error.maxSize">File too large {{errorFile.size / 1000000|number:1}}MB: max 2M</i>
+                     </div>
+                     <!-- FIRST NAME -->
+                     <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label class="control-label small">First Name</label>
+                        <span class="required" aria-required="true">*</span>
+                        <input name="inputFirstName" ng-model="vm.user.first_name" placeholder="First Name" type="text" class="form-control input-sm" required>
+                     </div>
+                     <!-- LAST NAME -->
+                     <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label class="control-label small">Last Name</label>
+                        <span class="required" aria-required="true">*</span>
+                        <input name="inputLastName" ng-model="vm.user.last_name" placeholder="Last Name" type="text" class="form-control input-sm" required>
+                     </div>
+                     <!-- Grand Father Name -->
+                     <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label class="control-label small">Grand Father Name</label>
+                        <input name="inputSurName" ng-model="vm.user.grandfather_name" placeholder="Grand Father Name" type="text" class="form-control input-sm">
+                     </div>
+                     <!-- Job Title -->
+                     <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label class="control-label small">Job Title</label>
+                        <span class="required" aria-required="true">*</span>
+                        <input name="inputTitle" ng-model="vm.user.title" placeholder="Title" type="text" class="form-control input-sm">
+                     </div>
+
+                     <!-- Email -->
+                     <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label class="control-label small">Email</label>
+                        <input name="inputTitle" ng-model="vm.user.email" placeholder="Email" type="email" class="form-control input-sm">
+                     </div>
+
+                     <!-- Phone -->
+                     <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                        <label class="control-label small">Phone</label>
+                        <input name="inputTitle" ng-model="vm.user.phone" placeholder="Phone" type="text" class="form-control input-sm">
+                     </div>
+                     <br/>
+                     <button type="button" class="btn btn-success pull-right" ng-click="vm.updateProfile(vm.user)">Update</button>
+                  </form>
+               </div>
+            </div>
+         </div>
+         <div ng-show="settingActive == 2">
+            <div class="panel b">
+               <div class="panel-heading bg-gray-lighter text-bold">Account</div>
+               <div class="panel-body">
+                  <form action="" name="vm.credentialForm" block-ui="credentialFormBlockUI">
+                     <div class="form-group">
+                        <label>Current Password</label>
+                        <input name="old_password" ng-model="vm.credentials.old_password" ng-required="true" class="form-control" type="password" />
+                     </div>
+                     <div class="form-group">
+                        <label>Create New Password</label>
+                        <input name="new_password" ng-model="vm.credentials.new_password" minlength="6" ng-required="true" class="form-control" type="password" />
+                        <div ng-show="vm.credentialForm.new_password.$error.minlength && vm.credentialForm.new_password.$dirty">
+                           <em class="text-danger">Minimum Password Length is 6</em>
+                        </div>
+                        <div class="form-group">
+                           <label>Confirm New Password</label>
+                           <input ng-model="vm.credentials.confirm_password" class="form-control" type="password" minlength="6" ng-required="true" name="confirm_password" />
+                        </div>
+
+                        <div ng-show="vm.credentials.new_password !== vm.credentials.confirm_password && vm.credentialForm.confirm_password.$dirty" <span class="text-danger">ERROR: Your password and confirmation password do not match</span>
+                        </div>
+
+                        <button class="btn btn-gray pull-right" ng-click="vm.changePassword(vm.credentials)" ng-disabled="vm.credentials.new_password !== vm.credentials.confirm_password" ng-class="vm.credentials.new_password !== vm.credentials.confirm_password && vm.credentials.new_password !== undefined ? 'btn-gray':'btn-success'"
+                        type="button">Change Password</button>
+                  </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>

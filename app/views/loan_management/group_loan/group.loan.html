@@ -1,0 +1,121 @@
+<h3>
+   <!-- Breadcrumb right aligned-->
+   <ul class="breadcrumb pull-right">
+      <li><a ui-sref="app.welcome">Group Loan</a>
+      </li>
+      <li ng-repeat="state in $state.$current.path" ng-switch="$last" ng-if="!state.abstract" ng-class="{active: $last}"><a ng-switch-when="false" href="#{{state.url.format($stateParams)}}">{{state.title}}</a>
+         <span ng-switch-when="true">{{state.title}}</span>
+      </li>
+   </ul>
+   Group Loan
+</h3>
+
+
+<div class="row">
+   <div class="panel panel-default">
+      <div class="panel-heading">
+         <div class="col-xs-12 col-lg-5">
+            <div ng-include="'app/views/loan_management/templates/branch.filter.partial.html'"></div>
+         </div>
+         <div class="col-xs-12 col-lg-4"></div>
+         <div class="col-xs-12 col-lg-3">
+            <label class="control-label">Loan Cycle</label>
+            <select name="LoanCycleSelect" id="LoanCycleSelectId" ng-change="vm.onSelectedLoanCycle()" ng-model="vm.currentUser.loanCycle">
+               <option ng-repeat="lc in vm.loanCycles" value="{{lc.id}}">{{lc.name}}</option>
+            </select>
+         </div>
+         <br/>
+      </div>
+      <div class="panel-body">
+         <div class="row">
+            <div class="col-lg-12">
+               <md-toolbar class="md-table-toolbar md-default" ng-show="vm.filter.show">
+                  <div class="md-toolbar-tools">
+                     <md-button class="md-icon-button" ng-click="vm.search()">
+                        <i class="fa fa-search"></i>
+                     </md-button>
+
+                     <!-- Input Text -->
+                     <md-input-container flex>
+                        <input id="search-input" type="text" ng-model="vm.query.search" />
+                     </md-input-container>
+
+                     <md-button class="md-icon-button" ng-click="vm.clearSearch()">
+                        <i class="fa fa-times"></i>
+                     </md-button>
+                  </div>
+               </md-toolbar>
+
+               <md-toolbar class="md-table-toolbar md-default" ng-hide="vm.filter.show">
+                  <div class="md-toolbar-tools">
+                     <div flex="" class="flex"></div>
+                     <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="vm.filter.show = true">
+                        <i class="fa fa-filter"></i>
+                        <div class="md-ripple-container"></div>
+                     </button>
+                  </div>
+               </md-toolbar>
+
+               <md-table-container>
+                  <table md-table md-progress="vm.groupLoansPromise" class="table-hover">
+                     <thead md-head class="bg-grey md-head">
+                        <tr md-row>
+                           <th md-column style="width:3%;">
+                              <span>No</span>
+                           </th>
+                           <th md-column>
+                              <span>Name</span>
+                           </th>
+                           <th md-column>
+                              <span>Leader</span>
+                           </th>
+                           <th md-column>
+                              <span>Members</span>
+                           </th>
+                           <th md-column>
+                              <span>Total Amount</span>
+                           </th>
+                           <th md-column>
+                              <span>Branch</span>
+                           </th>
+                           <th md-column>
+                              <span>Last Updated</span>
+                           </th>
+                           <th md-column>
+                              <span>Status</span>
+                           </th>
+                           <th md-column>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody md-body>
+                        <tr md-row ng-repeat="group in vm.groupLoans">
+                           <td md-cell>{{vm.query.per_page * (vm.query.page - 1) + $index + 1}}</td>
+                           <td md-cell>{{group.name }}</td>
+                           <td md-cell>{{group.leader.first_name}} {{group.leader.last_name}} {{group.leader.grandfather_name}}</td>
+                           <td md-cell>{{group.no_of_members}}</td>
+                           <td md-cell>{{group.total_amount | number }}</td>
+
+                           <td md-cell>{{group.branch.name }}</td>
+                           <td md-cell>{{group.last_modified | date}}</td>
+                           <td md-cell>
+                              <span ng-class="vm.labelBasedOnStatus(group.status)">{{group.status | ReplaceUnderscore}}</span>
+                           </td>
+                           <td md-cell>
+                              <a ng-click="vm.groupDetail(group,$event)">
+                                 <i class="fa fa-eye"></i>
+                              </a>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </md-table-container>
+
+               <md-table-pagination md-limit="vm.query.per_page" md-limit-options="vm.pageSizes" md-page="vm.query.page" md-total="{{vm.query.total_docs_count}}" md-page-select="vm.options.pageSelect" md-boundary-links="vm.options.boundaryLinks" md-on-paginate="vm.paginate">
+               </md-table-pagination>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+

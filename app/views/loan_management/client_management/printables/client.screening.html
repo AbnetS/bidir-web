@@ -1,0 +1,52 @@
+<div class="table-content">
+
+
+   <h6 class="text-uppercase text-center">
+      {{vm.Title}}
+   </h6>
+   <p>
+      <strong>Client Name:</strong>{{vm.clientName}}</p>
+   <p>
+      <strong>Loan Cycle:</strong>{{vm.loanNumber}}</p>
+
+   <div class="table">
+      <div class="row header-row uppercase">
+         <div class="col-xs-8">
+            <strong>Question</strong>
+         </div>
+         <div class="col-xs-4">
+            <strong>Answer</strong>
+         </div>
+      </div>
+      <div ng-switch on="vm.has_sections">
+         <div ng-switch-when="true">
+            <div ng-repeat="section in vm.sections">
+               <div class="row header-row text-center text-uppercase">
+                  <h5>{{section.title}}</h5>
+               </div>
+               <question-row-with-answer ng-repeat="question in section.questions " question-row-data="question" layout-data="vm.layout" parent-row-no="null" row-no="$index + 1"></question-row-with-answer>
+            </div>
+         </div>
+         <div ng-switch-default>
+            <question-row-with-answer ng-repeat="question in vm.questions" question-row-data="question" layout-data="vm.layout" parent-row-no="null" row-no="$index + 1"></question-row-with-answer>
+         </div>
+      </div>
+   </div>
+
+   <div class="row">
+
+      <div class="col-xs-12 pull-left">
+         <span ng-repeat="sig in vm.signatures">
+            <strong>{{sig}}:</strong>&nbsp; _____________________________ &nbsp;
+         </span>
+      </div>
+
+      <div class="col-xs-12">
+         <strong>DISCLAIMER:</strong>
+         <em>
+            {{vm.disclaimer!==''? vm.disclaimer:'Survey disclaimers frequently include a provision that data is not associated with the answers provided on the survey.'}}
+         </em>
+      </div>
+   </div>
+
+</div>

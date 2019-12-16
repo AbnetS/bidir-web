@@ -1,0 +1,5 @@
+<md-input-container class="md-block">
+   <input ng-disabled="isReadonly" ng-attr-type="{{questionData.validation_factor == 'NUMERIC' ? 'number' : 'text'}}" id="{{questionData.number}}" name="{{questionData.number}}" ng-required='questionData.required' ng-model="questionData.values[0]">
+   <small>{{questionData.measurement_unit}}
+      <small>
+</md-input-container>

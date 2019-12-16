@@ -1,0 +1,89 @@
+
+
+<h3>User Management
+    <small>Manage user information including all branch information.</small>
+</h3>
+
+<!-- ngRepeat + ngResource-->
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="col-xs-10 col-lg-5">
+            <label class="control-label small">Filter By Branches</label>
+            <ui-select ng-model="vm.currentUser.selected_access_branch"
+                       theme="select2"  on-select="vm.onSelectedBranch(branch)"
+                       title="select branch" style="width: 100%;">
+                <ui-select-match allow-clear="true" placeholder="Select access branch to filter...">
+                    {{$select.selected.name}} - {{$select.selected.location}}
+                </ui-select-match>
+                <ui-select-choices repeat="branch in vm.currentUser.user_access_branches | filter: $select.search">
+                    <div ng-bind-html="branch.name | highlight: $select.search"></div>
+                    <small>
+                        <strong>location:</strong> {{branch.location}}
+                    </small>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <div class="col-xs-12 col-lg-7"></div>
+    </div>
+    <div class="panel-body">
+        <div class="row" userpermission="'USER_MANAGEMENT_USER_CREATE'">
+            <div class="col-xs-10 col-lg-12">
+                    <p><a class="btn btn-success pull-right" href="" ng-click="vm.addUser()">
+                        <i class="fa fa-plus"></i>
+                        Add User</a>
+                    </p>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-lg-12" ng-show="vm.visibility.loading === true">
+                <md-progress-linear md-mode="indeterminate" ></md-progress-linear>
+                <div class="alert small alert-info">fetching data.....</div>
+            </div>
+            <div class="col-lg-12">
+                <table class="row-border hover" datatable="ng">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Default Branch</th>
+                        <th>username</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="usr in vm.users">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{ usr.account.first_name }} {{ usr.account.last_name }}</td>
+                        <td>{{usr.account.role.name }}</td>
+                        <td>{{usr.account.default_branch.name }}</td>
+                        <td>{{ usr.username }}</td>
+                        <td>
+                            <span ng-class="vm.statusStyle(usr.status)">{{usr.status }}</span>
+                        </td>
+                        <td>
+                            <button userpermission="['USER_MANAGEMENT_USER_UPDATE']"
+                                    class="btn btn-info btn-xs"
+                               ng-disabled="usr.status==='suspended'" ng-click="vm.editUser(usr,$event)">
+                                <i class="fa fa-edit"></i> Edit
+                            </button>
+                            <button class="btn btn-default btn-xs"
+                                    userpermission="['USER_MANAGEMENT_USER_ACTIVATE','USER_MANAGEMENT_USER_DEACTIVATE']"
+                                ng-click="vm.changeStatus(usr)">
+                                    <i class="fa fa-eye"></i>
+                                    {{usr.status=== 'active'? "Deactivate":"Activate"}}
+                            </button>
+                            <button  class="btn btn-danger btn-xs"
+                                    ng-if="vm.isSuperAdmin" ng-click="vm.onresetUserPassword(usr,$event)">
+                                <i class="fa fa-key"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

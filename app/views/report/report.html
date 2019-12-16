@@ -1,0 +1,96 @@
+<h3>
+   <ul class="breadcrumb pull-right">
+      <li><a ui-sref="app.welcome">Report</a>
+      </li>
+      <li ng-repeat="state in $state.$current.path" ng-switch="$last" ng-if="!state.abstract" ng-class="{active: $last}">
+         <a ng-switch-when="false" href="#{{state.url.format($stateParams)}}">{{state.title}}</a>
+         <span ng-switch-when="true">{{state.title}}</span>
+      </li>
+   </ul>
+   Reports
+</h3>
+
+
+
+
+
+
+
+
+
+<div class="row">
+   <!-- Report sidebar-->
+   <div class="col-lg-3">
+      <div class="panel panel-default">
+         <div class="panel-body">
+            <p class="lead">Report Generator</p>
+            <div class="col-xs-12 col-lg-12">
+               <label class="control-label">Report Types</label>
+               <ui-select ng-model="vm.report" theme="select2" on-select="vm.onSelectedReport()" title="select report" style="width: 100%;">
+                  <ui-select-match allow-clear="true" placeholder="Select report...">{{$select.selected.title}}</ui-select-match>
+                  <ui-select-choices repeat="report in vm.reportsList | filter: $select.search">
+                     <span ng-bind-html="report.title | highlight: $select.search"></span>
+                  </ui-select-choices>
+               </ui-select>
+            </div>
+
+
+         </div>
+         <div class="panel-body">
+            <em>{{vm.report.description}}</em>
+         </div>
+
+         <div class="section-divider">
+            <span>Filters</span>
+         </div>
+         <div class="panel-body">
+            <report-parameter parameters="vm.report.parameters"></report-parameter>
+         </div>
+
+         <div class="panel-body">
+            <button ng-click="vm.generateReport()" class="btn btn-success pull-right">Generate</button>
+         </div>
+         <!--            <div ng-if="!parameter.has_parameters" class="panel-body">-->
+         <!--                <em> NO PARAMETER FOR {{vm.report.name}}</em>-->
+         <!--            </div>-->
+
+         <!--            TODO: when no parameter show message
+                    populate value on filter select
+-->
+
+
+
+      </div>
+   </div>
+
+
+   <!-- Report Content-->
+   <div class="col-lg-9">
+      <div class="panel">
+
+         <div class="row" ng-show="!vm.report._id">
+            <h4 class="centerPageText-lg">
+               <p>PLEASE! Select Report from the the left side
+                  <i class="fa fa-arrow-circle-left"></i>
+               </p>
+               <a></a>
+            </h4>
+         </div>
+
+         <div class="row" ng-show="vm.report._id" block-ui="reportDownload">
+            <div ng-if="vm.showDownloadDocBtn" class="col-md-12">
+               <a ng-hide="vm.report.isLoading" ng-click="vm.downloadDocFile()" class="btn btn-lg btn-success pull-right">Download Doc!</a>
+               <!-- Shows loading progress-->
+               <div ng-show="vm.report.isLoading">
+                  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+                  <div class="alert small alert-info">{{vm.report.title }} Downloading.....</div>
+               </div>
+            </div>
+            <div class="col-md-12">
+               <embed ng-src="{{vm.pdfFile}}" type="application/pdf" style="width:100%;height:65vw;" />
+            </div>
+         </div>
+
+      </div>
+   </div>
+</div>

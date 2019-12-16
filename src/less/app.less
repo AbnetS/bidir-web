@@ -1,0 +1,250 @@
+/*!
+ *
+ * Angle - Bootstrap Admin App + AngularJS Material
+ *
+ * Version: 3.8.1
+ * Author: @themicon_co
+ * Website: http://themicon.co
+ * License: https://wrapbootstrap.com/help/licenses
+ *
+ */
+
+// Bootstrap
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+// Bootstrap reset
+@import "app/bootstrap-reset";
+
+// Bootstrap Variables and Mixins
+// @import "bootstrap/variables";
+// @import "bootstrap/mixins";
+
+// Global definition of media queries
+@import "app/media-queries.less";
+
+// Typography
+@import "app/typo";
+
+// Layout
+@import "app/layout";
+@import "app/layout-extra";
+@import "app/layout-animation";
+@import "app/top-navbar";
+@import "app/sidebar";
+@import "app/offsidebar";
+
+
+// Components
+@import "app/preloader";
+@import "app/breadcrumbs";
+@import "app/loading-bar";
+@import "app/animate";
+@import "app/button-extra";
+@import "app/panels";
+@import "app/user-block";
+@import "app/circles";
+@import "app/dropdown-extra";
+@import "app/row-extra";
+
+// Plugins
+@import "app/datepicker";
+@import "app/gmap";
+
+// Utilities
+@import "app/utils";
+
+// Print CSS
+@import "app/print";
+
+// Material
+@import "app/material/colors";
+@import "app/material/welcome";
+@import "app/material/cards";
+@import "app/material/md-forms";
+@import "app/material/md-list";
+@import "app/material/md-inputs";
+@import "app/material/ngmaterial";
+
+
+@import "custom/material-custom";
+@import "custom/custom";
+@import "custom/customPrint";
+
+.green{
+  background: #4CAF50;
+}
+.bidir-bg{
+  color: #fff;
+  background-color: @brand-success;
+}
+
+.bidir-color{
+  color: #4CAF50;
+  background: #000;
+}
+
+.img-preview {
+  max-width:315px;
+  max-height:160px;
+  overflow: hidden;
+}
+
+
+
+
+//.md-toolbar-tools {
+//  background-color: transparent;
+//  color: #000000;
+//}
+
+
+.line {
+  min-height: 25px;
+  border-bottom: 2px solid @brand-success;
+}
+//------shows disabled looking message-----
+.centerPageText {
+  color: #e8e8e8;
+  text-align: center;
+  padding: 150px;
+  font-size: 20px;
+}
+.centerPageText-lg {
+  color: #e8e8e8;
+  text-align: center;
+  padding: 100px;
+  font-size: 40px;
+}
+///---Section Divider with horizontal line----
+.section-divider{
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.section-divider > span {
+  position: relative;
+  display: inline-block;
+}
+
+.section-divider > span:before,
+.section-divider > span:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 9999px;
+  height: 1px;
+  background: rgba(195, 195, 195, 0.61);
+}
+
+.section-divider > span:before {
+  right: 100%;
+  margin-right: 15px;
+}
+
+.section-divider > span:after {
+  left: 100%;
+  margin-left: 15px;
+}
+//
+//
+//#inputs {
+//  width: 50%;
+//  margin: auto;
+//  position: absolute;
+//  bottom: 5px;
+//  left: 35px;
+//}
+.vertical-splitter{
+  border-left: solid rgba(195, 195, 195, 0.61) 1px;min-height: 100px
+}
+.vertical-splitter-xs {
+  border-left: 1px;min-height: 10px
+}
+
+
+.editableTextInput {
+  border: none;
+  background-color: #EDD46D;
+  outline: 0;
+}
+
+legend {
+  background-color: white;
+}
+
+.editableTextInput:focus {
+  border: none;
+  background-color: none;
+  outline: 0;
+}
+
+.dynamic-text {
+  cursor: pointer;
+}
+
+.Absolute-Center {
+  height: 50%;
+  /* Set your own height: percents, ems, whatever! */
+
+  width: 50%;
+  /* Set your own width: percents, ems, whatever! */
+
+  overflow: auto;
+  /* Recommended in case content is larger than the container */
+
+  margin: auto;
+  /* Center the item vertically & horizontally */
+
+  position: absolute;
+  /* Break it out of the regular flow */
+
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  /* Set the bounds in which to center it, relative to its parent/container */
+}
+
+.raised {
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0.2s;
+  box-shadow: 0 2px 25px 0 rgba(0, 0, 0, 0.35);
+}
+
+::selection {
+  background: #D3EB7E; /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+  background: #D3EB7E; /* Gecko Browsers */
+}
+.section-style{
+  min-height: 320px;
+  max-height: 480px;
+}
+.move-cursor {
+  cursor: move;
+}
+
+.question-row{
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+.question-row .md-input-container{
+  margin: 0px;
+  margin-bottom: 15px;
+}
+
+.alternate-div{
+  background-color: whitesmoke;
+}
+.print-modal {
+  height: auto;
+  width: 210mm;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 10000;
+  position: absolute;
+  padding: 5px;
+  background-color: #fff;
+}

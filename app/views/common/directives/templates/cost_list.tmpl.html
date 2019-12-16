@@ -1,0 +1,116 @@
+<form name="costListForm">
+
+   <div class="col-md-3">
+      <!--EXPECTED-->
+      <div class="panel panel-success mt">
+         <div class="panel-heading">
+            <h4 class="panel-title">Expected</h4>
+         </div>
+         <table class="table">
+            <tbody>
+               <tr>
+                  <td>Quantity</td>
+                  <td>
+                     <input class="form-control" type="number" ng-model="costListData.estimated.value">
+                  </td>
+               </tr>
+               <tr>
+                  <td>Price</td>
+                  <td>
+                     <input class="form-control" type="number" ng-model="costListData.estimated.unit_price">
+                  </td>
+               </tr>
+
+            </tbody>
+         </table>
+         <div class="panel-body">
+            <div class="clearfix">
+               <div class="pull-right text-right">
+                  <div class="text-bold">{{costListData.estimated.total_price|number}}</div>
+               </div>
+               <div class="pull-left text-bold text-dark">TOTAL</div>
+            </div>
+         </div>
+      </div>
+      <br/>
+
+      <!--ACTUAL-->
+      <div class="panel">
+         <div class="panel-heading">
+            <h4 class="panel-title">Actual</h4>
+         </div>
+         <table class="table">
+            <tbody>
+               <tr>
+                  <td>Quantity</td>
+                  <td>
+                     <input class="form-control" type="number" ng-model="costListData.achieved.value">
+                  </td>
+               </tr>
+               <tr>
+                  <td>Price</td>
+                  <td>
+                     <input class="form-control" type="number" ng-model="costListData.achieved.unit_price">
+                  </td>
+               </tr>
+
+            </tbody>
+         </table>
+         <div class="panel-body">
+            <div class="clearfix">
+               <div class="pull-right text-right">
+                  <div class="text-bold">{{costListData.achieved.total_price | number}}</div>
+               </div>
+               <div class="pull-left text-bold text-dark">TOTAL</div>
+            </div>
+         </div>
+      </div>
+
+      <!--UNIT-->
+      <div class="panel">
+         <table class="table">
+            <tbody>
+               <tr>
+                  <td>Unit</td>
+                  <td>
+                     <input class="form-control" type="text" ng-model="costListData.unit">
+                  </td>
+               </tr>
+
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <div class="col-md-9">
+
+      <div class="form-group text-center text-uppercase">
+         <div class="col-sm-12 col-md-2">
+         </div>
+         <div class="col-sm-12 col-md-5">
+            <strong class="form-label">Expected</strong>
+         </div>
+         <div class="col-sm-12 col-md-5">
+            <strong class="form-label">Actual</strong>
+         </div>
+      </div>
+      <div class="form-group" ng-repeat="month in monthes">
+         <div class="col-sm-12 col-md-2 text-right">
+            <small class="form-label">{{month.name | titleCase}}</small>
+         </div>
+         <div class="col-sm-12 col-md-5">
+            <input class="form-control" type="number" ng-model="costListData.estimated.cash_flow[month.short]">
+         </div>
+         <div class="col-sm-12 col-md-5">
+            <input class="form-control" type="number" ng-model="costListData.achieved.cash_flow[month.short]">
+         </div>
+      </div>
+   </div>
+   <br>
+   <div class="col-md-12 panel-body">
+      <div class=" col-md-8 col-md-offset-2">
+         <div class="pull-left text-bold text-dark col-md-2 ">Remark</div>
+         <textarea class="form-control col-md-10 " cols="2" ng-model="costListData.remark"></textarea>
+      </div>
+   </div>
+
+</form>

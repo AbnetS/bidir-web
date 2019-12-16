@@ -1,0 +1,36 @@
+<div role="dialog" aria-label="Filter Dialoge!" layout="column" layout-align="center center">
+   <div class="demo-dialog-content">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="row" style="margin:15px 40px 10px 0px">
+               <span class="uppercase">Select Modules</span>
+               <span class="pull-right" style="padding-left: 30px">
+                  <span ng-if="!vm.isChecked(vm.selectedTypes,vm.moduleTypes)">
+                     <span class="badge bg-green">{{vm.selectedTypes.length}}</span>
+                     <a ng-click="vm.toggleAll(vm.selectedTypes,vm.moduleTypes)">
+                        <small>Select all</small>
+                     </a>
+                  </span>
+                  <span ng-if="vm.isChecked(vm.selectedTypes,vm.moduleTypes)">
+                     <span class="badge bg-green">{{vm.selectedTypes.length}}</span>
+                     <a ng-click="vm.toggleAll(vm.selectedTypes,vm.moduleTypes)">
+                        <small>None</small>
+                     </a>
+                  </span>
+               </span>
+            </div>
+            <div ng-repeat="item in vm.moduleTypes">
+               <md-checkbox class="md-primary" ng-checked="vm.exists(item,vm.selectedTypes)" ng-click="vm.toggle(item, vm.selectedTypes)">
+                  {{ item.ModuleType }}
+               </md-checkbox>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <md-dialog-actions layout="row">
+      <md-button class="md-raised md-button-small md-ink-ripple" ng-click="vm.closeDialog()">Cancel</md-button>
+      <md-button class="md-raised md-primary md-button-small md-ink-ripple" ng-click="vm.applyFilter()">Ok</md-button>
+   </md-dialog-actions>
+
+</div>

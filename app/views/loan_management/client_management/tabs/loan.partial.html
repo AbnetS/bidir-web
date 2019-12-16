@@ -1,0 +1,48 @@
+<div class="row" ng-show="vm.client.loan_application.sections.length > 0" block-ui="loanTabBlockUI">
+   <div class="col-lg-12">
+      <div class="pull-left">
+         <a ng-click="vm.printLoanProcess(vm,'LOAN_APPLICATION')" class="btn btn-default hidden-print">
+            <i class="icon-printer"></i>
+         </a>
+      </div>
+      <div class="pull-right">
+         <span class="label label-inverse" am-time-ago="vm.loan_application.last_modified"></span>
+      </div>
+   </div>
+   <!--QUESTION HEADER-->
+   <div class="col-lg-12">
+      <br/>
+      <div class="col-md-1">
+         <b>No</b>
+      </div>
+      <div ng-class="{'THREE_COLUMNS' : 'col-md-6', 'TWO_COLUMNS': 'col-md-7'}[vm.client.loan_application.layout]">
+         <b>Question</b>
+      </div>
+      <div ng-class="{'THREE_COLUMNS' : 'col-md-3', 'TWO_COLUMNS': 'col-md-4'}[vm.client.loan_application.layout]">
+         <b>Answer</b>
+      </div>
+      <div ng-if="vm.client.loan_application.layout == 'THREE_COLUMNS'" class="col-md-2">
+         <b>Remark</b>
+      </div>
+   </div>
+   <hr>
+   <!--QUESTIOSN LIST-->
+   <div class="col-lg-12">
+      <div ng-repeat="section in vm.client.loan_application.sections">
+         <div class="bg-success text-center text-uppercase">
+            <h5 class="">{{section.title}}</h5>
+         </div>
+         <question-row ng-repeat="question in section.questions" question-row-data="question" layout-data="vm.client.loan_application.layout" row-no="$index + 1" is-readonly="true"></question-row>
+      </div>
+
+      <br/>
+
+   </div>
+
+</div>
+
+<div ng-show="!vm.client.loan_application.sections ||  vm.client.loan_application.sections.length === 0">
+   <h4 class="centerPageText">
+      <strong>CAN'T FIND LOAN APPLICATION FOR SELECTED LOAN CYCLE...</strong>
+   </h4>
+</div>

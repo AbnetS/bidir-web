@@ -1,0 +1,323 @@
+<md-dialog flex="60">
+    <form role="form" name="vm.QuestionBuilderForm" novalidate block-ui="QuestionBuilderBlockUI">
+        <md-toolbar class="small">
+            <div class="md-toolbar-tools small">
+                <h2>{{vm.isEdit?'Edit ':'Add '}}Question</h2>
+                <span flex></span>
+                <md-button aria-label="button" class="md-icon-button" ng-click="vm.cancel()">
+                    <i class="icon-close"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <md-content class="md-padding">
+                <div class="row">
+                    <!--LEFT SIDE QUESTION INFO-->
+                    <div class="col-lg-7">
+                        <!--QUESTION TYPE-->
+                        <div class="mw-question-type" layout="row" layout-align="start center">
+                            <md-input-container flex-gt-md="50">
+                                <label class="col-sm-2 control-label">Question Type</label>
+                                <ui-select ng-model="vm.question.selected_type"
+                                           theme="select2" title="Select question type"
+                                        ng-change="vm.questionTypeChanged()">
+                                    <ui-select-match placeholder="Select question type...">
+                                        {{$select.selected.name }}
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="qnType in vm.questionTypes | filter: $select.search">
+                                        <span ng-bind-html="qnType.name | highlight: $select.search"></span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </md-input-container>
+                        </div>
+                        <!--QUESTION TEXT-->
+                        <div class="form-horizontal">
+                            <md-input-container class="md-block">
+                                <label for="question-text-{{vm.id}}">Question Text</label>
+                                <textarea ng-model="vm.question.question_text" class="form-control"
+                                          maxlength="500" id="question-text-{{vm.id}}"
+                                          name="question_question_text"
+                                          required>
+                                </textarea>
+                            </md-input-container>
+                        </div>
+                        <!--REMARK-->
+                        <div class="form-horizontal">
+                            <md-input-container class="md-block">
+                                <label for="question-remark" >
+                                    <em>Remark</em>
+                                </label>
+                                <input type="text"  id="question-remark"
+                                       name="question-remark" ng-model="vm.question.remark">
+                            </md-input-container>
+                        </div>
+                        <!--REQUIRED-->
+                        <div class="form-horizontal">
+                            <md-input-container class="md-block" flex-gt-md="20">
+                                <md-checkbox class="md-primary" ng-model="vm.question.required" ng-disabled="vm.readOnly" flex>
+                                    <span>Required</span>
+                                </md-checkbox>
+                            </md-input-container>
+                        </div>
+                    </div>
+
+                    <div  ng-if="vm.question.selected_type"
+                         class="col-lg-5 vertical-splitter">
+                        <div class="section-divider">
+                            <span class="grey">{{vm.question.selected_type.name }} Settings</span>
+                        </div>
+                        <div class="mw-form-question-answers-builder" ng-switch="vm.question.selected_type.type">
+                            <!--Fill in the blank-->
+                            <div ng-switch-when="text"  >
+
+                                <md-input-container layout-gt-sm="row">
+                                    <label for="fibValidation" class="col-sm-2 control-label">Validation</label>
+                                    <md-select id="fibValidation" name="fibValidation"
+                                               ng-change="vm.questionTypeChanged()"
+                                               ng-model="vm.question.selected_validation"
+                                               ng-disabled="vm.readOnly"
+                                                required>
+                                        <md-option ng-value="validation"
+                                                   ng-repeat="validation in vm.fibvalidation">
+                                            {{ validation.name }}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container layout-gt-sm="row">
+                                    <input type="text" ng-model="vm.question.measurement_unit" placeholder="Unit of Measurement e.g. ETB , years...">
+                                </md-input-container>
+                            </div>
+                            <!--Yes NO-->
+                            <div ng-switch-when="yn">
+                                <md-radio-group layout="row" ng-disabled="true">
+                                    <md-radio-button value=1 class="md-primary">Yes</md-radio-button>
+                                    <md-radio-button value=0> No</md-radio-button>
+                                </md-radio-group>
+                            </div>
+                            <!--SINGLE SELECT-->
+                            <div ng-switch-when="select">
+                                <div class="list-group" ui-sortable="vm.sortableOptions"
+                                     ng-model="vm.question.options">
+                                        <div class="list-group-item"
+                                             ng-click="vm.editOption(radioOption)"
+                                             ng-repeat="radioOption in vm.question.options">
+                                            <em class="fa fa-reorder fa-fw text-muted mr-lg"></em>{{radioOption}}
+                                            <a ng-click="vm.removeOption(radioOption)"><i class="fa fa-remove"></i></a>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <input class="form-control"
+                                                   ng-model="vm.newRadioValue"
+                                                   keypress-enter='vm.addRadio(vm.newRadioValue)'
+                                                   placeholder="type more option..."
+                                                   type="text">
+                                            <span class="input-group-btn">
+                                                <button ng-click='vm.addRadio(vm.newRadioValue)'
+                                                        class="btn btn-default" type="button">{{vm.isOptionEdit?'Update':'ADD'}} </button></span>
+                                        </div>
+                                </div>
+                            </div>
+                            <!--MULTI SELECT-->
+                            <div ng-switch-when="checkbox">
+                                <div class="list-group" ui-sortable="vm.sortableOptions"
+                                     ng-model="vm.question.options">
+                                    <div class="list-group-item"
+                                         ng-click="vm.editOption(radioOption)"
+                                         ng-repeat="radioOption in vm.question.options">
+                                        <em class="fa fa-reorder fa-fw text-muted mr-lg"></em>{{radioOption}}
+                                        <a ng-click="vm.removeOption(radioOption)"><i class="fa fa-remove"></i></a>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <input class="form-control"
+                                               ng-model="vm.newRadioValue"
+                                               keypress-enter='vm.addRadio(vm.newRadioValue)'
+                                               placeholder="type more option..."
+                                               type="text">
+                                        <span class="input-group-btn">
+                                                <button ng-click='vm.addRadio(vm.newRadioValue)'
+                                                        class="btn btn-default" type="button">{{vm.isOptionEdit?'Update':'ADD'}}</button></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--SHOW THIS QUESTION-->
+                            <md-input-container class="md-block">
+                                <p>Show this Question:</p>
+                                <md-radio-group  layout="row" ng-model="vm.question.show" ng-change="vm.showQuestionOn()">
+                                    <md-radio-button value=1 class="md-primary"> Always</md-radio-button>
+                                    <md-radio-button value=0 class="md-primary">When</md-radio-button>
+                                </md-radio-group>
+                            </md-input-container>
+
+                            <div ng-show="vm.question.show === '0' || !vm.question.show">
+                                <md-input-container class="md-block">
+                                    <label id="dependant_question" class="col-sm-2 control-label">
+                                        Question </label>
+
+                                    <ui-select ng-model="vm.selected_question"
+                                               theme="select2" title="Select question">
+                                        <ui-select-match placeholder="Select question...">
+                                            {{$select.selected.question_text }}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="qn in vm.questionList | filter: $select.search">
+                                            <span ng-bind-html="qn.question_text | highlight: $select.search"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </md-input-container>
+                                <md-input-container class="md-block">
+                                    <label label-for="question-id"
+                                           class="col-sm-2 control-label">Choice is
+                                    </label>
+                                    <ui-select ng-model="vm.selected_question.selected_value"
+                                               theme="select2"
+                                               title="Select option"
+                                               search-enabled="true">
+                                        <ui-select-match placeholder="Select option..."
+                                                         allow-clear="true">
+                                            {{$select.selected }}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="opt in vm.selected_question.options | filter: $select.search">
+                                            <span ng-bind-html="opt | highlight: $select.search"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                </md-input-container>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!--GROUPED QUESTION-->
+                <div class="row"
+                     ng-if="vm.question.selected_type.type === 'grouped'">
+                    <form role="form" name="vm.SubQuestionBuilderForm"
+                          block-ui="SubQuestionBuilderBlockUI">
+                        <div class="section-divider">
+                            <span class="grey">Sub Questions Section</span>
+                        </div>
+                        <div class="col-lg-12" ng-if="vm.showSubQuestion">
+                            <div class="form-horizontal">
+                                <md-input-container class="md-block">
+                                    <label for="sub_question-text">Sub Question Text</label>
+                                    <textarea ng-model="vm.sub_question.question_text" class="form-control"
+                                              maxlength="500" id="sub_question-text"
+                                              required>
+                                    </textarea>
+                                </md-input-container>
+                            </div>
+
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label for="sub_Validation" class="col-sm-2 control-label">Validation</label>
+                                    <md-select id="sub_Validation" name="sub_Validation"
+                                               ng-model="vm.sub_question.selected_validation"
+                                               ng-change="vm.subQuestionValidationSelected()"
+                                               required>
+                                        <md-option ng-value="validation"
+                                                   ng-repeat="validation in vm.fibvalidation">
+                                            {{ validation.name }}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <input type="text"
+                                           ng-model="vm.sub_question.measurement_unit"
+                                           placeholder="Unit of Measurement e.g. ETB , years...">
+                                </md-input-container>
+                            </div>
+
+
+                            <md-button ng-show="!vm.isSubEdit"
+                                       class="md-raised md-warn md-button-small pull-right"
+                                       ng-click="vm.addToSubQuestion()">
+                                <i class="fa fa-plus"></i> Add
+                            </md-button>
+                            <md-button ng-show="!vm.isSubEdit"
+                                       class="md-raised md-button-small pull-right"
+                                       ng-click="vm.cancelSubQuestion()">
+                                <i class="fa fa-times"></i> Cancel
+                            </md-button>
+                        </div>
+
+                        <div class="col-lg-12" ng-show="!vm.showSubQuestion || vm.isSubEdit">
+                            <md-button class="md-raised md-primary md-button-small pull-right"
+                                       ng-disabled="vm.QuestionBuilderForm.question_question_text.$invalid"
+                                       event-focus='click'
+                                       event-focus-id='sub_question-text'
+                                       ng-click="vm.toggleAddSubQuestion()">
+                                <i class="fa fa-plus"></i> Add Sub Question
+                            </md-button>
+                        </div>
+
+                        <div class="col-lg-12" ng-show="vm.sub_question_list.length > 0">
+                            <div class="table-responsive" >
+                                <table class="table table-striped table-bordered table-condensed">
+                                    <thead class="bg-gray">
+                                    <tr>
+                                        <th><span> No</span></th>
+                                        <th><span>Question</span></th>
+                                        <th><span>Measurement Unit</span></th>
+                                        <th><span>Validation</span></th>
+                                        <th><span>Action</span></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ui-sortable="sortableSubQuestions" ng-model="vm.sub_question_list">
+                                    <tr ng-repeat="question in vm.sub_question_list">
+                                        <td  >{{$index + 1}}</td>
+                                        <td class="move-cursor">{{question.question_text}}</td>
+                                        <td >{{question.measurement_unit}}</td>
+                                        <td >{{question.validation_factor}}</td>
+                                        <td >
+                                            <a class="btn btn-xs btn-default"
+                                               event-focus='click'
+                                               event-focus-id='sub_question-text'
+                                               ng-click="vm.editSubQuestion(question,$event)">
+                                                <i class="fa fa-edit"></i> Edit
+                                            </a>
+                                            <a class="btn btn-xs btn-danger" ng-click="vm.removeSubQuestion(question,$event)">
+                                                <i class="fa fa-remove"></i> DEL
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+            </md-content>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+
+            <div layout="row" layout-align="start" flex>
+                <md-button class="md-raised md-button-small md-ink-ripple" ng-click="vm.cancel()">
+                    Cancel
+                </md-button>
+                <md-button ng-show="vm.isEdit"
+                           class="md-raised md-button-small md-ink-ripple"
+                           ng-click="vm.removeQuestion(vm.question,$event)">
+                    Remove
+                </md-button>
+            </div>
+            <md-button ng-hide="true" ng-show="vm.isEdit" class="md-raised md-button-small pull-right"
+                       ng-disabled="vm.QuestionBuilderForm.$invalid"
+                ng-click="vm.addAnother()">
+                <i class="fa fa-plus"></i> Add Another
+            </md-button>
+            <md-button class="md-raised md-primary md-button-small pull-right"
+                       ng-disabled="vm.QuestionBuilderForm.$invalid"
+                       ng-click="vm.saveQuestion()">
+                <i class="fa fa-save"></i> {{vm.isEdit?'Update':'Save'}}
+            </md-button>
+
+        </md-dialog-actions>
+    </form>
+</md-dialog>

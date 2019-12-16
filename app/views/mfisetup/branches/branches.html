@@ -1,0 +1,64 @@
+<h3>Manage Branch
+   <small>Manage Branches related to the logged in user...</small>
+</h3>
+
+<!-- START panel-->
+<div class="panel panel-default">
+   <div class="panel-body">
+      <div class="row">
+         <div class="col-sm-12">
+            <div class="row" userpermission="'MFI_SETUP_BRANCH_CREATE'">
+               <div class="col-xs-10 col-lg-12">
+                  <p>Head Office is created by default. Add more branches.
+                     <a class="btn btn-success pull-right" ng-click="vm.addBranch($event)">
+                        <i class="fa fa-plus"></i>
+                        Add Branch</a>
+                  </p>
+               </div>
+            </div>
+            <br/>
+
+            <div class="row">
+               <div class="col-lg-12" block-ui="BranchListBlockUI">
+                  <table class="row-border hover" datatable="ng">
+                     <thead>
+                        <tr>
+                           <th>#</th>
+                           <th>Name</th>
+                           <th>Location</th>
+                           <th>Opening Date</th>
+                           <th>Branch Type</th>
+                           <th>email</th>
+                           <th>status</th>
+                           <th></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr ng-repeat="branch in vm.branches">
+                           <td>
+                              {{$index + 1}}
+                           </td>
+                           <td>{{branch.name}}</td>
+                           <td>{{branch.location}}</td>
+                           <td>{{branch.opening_date | date}}</td>
+                           <td>{{branch.branch_type}}</td>
+                           <td>{{branch.email}}</td>
+                           <td>
+                              <span ng-class="branch.status==='active'?'label label-success':'label label-default'">{{branch.status}}</span>
+                           </td>
+                           <td class="text-center">
+                              <a userpermission="['MFI_SETUP_BRANCH_UPDATE']" ng-if="branch.status==='active'" ng-click="vm.editBranch(branch)">
+                                 <i class="fa fa-edit"></i>
+                                 Edit
+                              </a>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<!-- END panel-->

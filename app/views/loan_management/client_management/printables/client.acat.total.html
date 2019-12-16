@@ -1,0 +1,133 @@
+<div class="table-content">
+
+
+   <h6 class="text-uppercase text-center">
+      {{vm.Title}}
+   </h6>
+   <p>
+      <strong>Client Name:</strong>{{vm.clientName}}</p>
+   <p>
+      <strong>Loan Cycle:</strong>{{vm.loanNumber}}</p>
+
+
+   <div class="row">
+
+      <div class="col-md-12">
+
+         <div>
+            <!--TOTAL-->
+            <div class="panel panel-success b">
+               <div class="panel-heading bb">
+                  <h4 class="panel-title">TOTAL</h4>
+               </div>
+               <div class="panel-body bt">
+                  <h4 class="b0">Total Estimated</h4>
+               </div>
+               <table class="table">
+                  <tbody>
+                     <tr>
+                        <td>Total Revenue</td>
+                        <td>
+                           <div class="text-right text-bold">{{vm.estimated.total_revenue | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Total Cost</td>
+                        <td>
+                           <div class="text-right text-bold">{{vm.estimated.total_cost | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>NET Income</td>
+                        <td>
+                           <div class="text-right text-bold">{{vm.estimated.net_income | number}}</div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+            </div>
+
+
+            <!--ESTIMATED NET CASH FLOW-->
+            <div class="panel b text-center">
+               <div class="panel-body bt">
+                  <div class="row">
+                     <div class="col-md-12 br">
+                        <label class="text-bold text-gray-darker pb-sm pt-sm">Estimated Net Cash Flow</label>
+                     </div>
+                     <!--Estimated Net Cash Flow-->
+                     <div class="col-md-12">
+                        <div ng-repeat="(key, value) in vm.estimated.net_cash_flow" class="col-xs-4 col-md-2 br">
+                           <small class="center-block">{{key | uppercase}}</small>
+                           <strong>{{value | number}}</strong>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <!--Loan Proposal Summary-->
+            <div class="panel panel-success b">
+               <div class="panel-heading bb">
+                  <h4 class="panel-title">Loan Proposal Summary</h4>
+               </div>
+               <div class="panel-body bt">
+                  <h4 class="b0">Loan Proposal</h4>
+               </div>
+               <table class="table">
+                  <tbody>
+                     <tr>
+                        <td>Loan Requested</td>
+                        <td>
+                           <div class="text-right text-bold">{{vm.loanProposals.loan_requested | number }}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Loan Proposed</td>
+                        <td>
+                           <div class="text-right text-bold">{{vm.loanProposals.loan_proposed | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Loan Approved</td>
+                        <td>
+                           <div class="text-right text-bold">{{vm.loanProposals.loan_approved | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Total Deductibles</td>
+                        <td>
+                           <div class="text-right text-bold">{{vm.loanProposals.loan_detail.total_deductibles | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Total Loan Costs</td>
+                        <td>
+                           <div class="text-right text-bold">{{vm.loanProposals.loan_detail.total_cost_of_loan | number}}</div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Cash at hand</td>
+                        <td>
+                           <div class="text-right text-bold">
+                              {{vm.loanProposals.loan_proposed - vm.loanProposals.loan_detail.total_deductibles | number}}
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Repayable</td>
+                        <td>
+                           <div class="text-right text-bold">{{vm.clientLoanProposals.repayable | number}}</div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+</div>

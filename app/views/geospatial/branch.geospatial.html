@@ -1,0 +1,114 @@
+<div class="row">
+   <div class="col-md-8">
+      <form name="filteringForm">
+         <div class="panel panel-default" id="panelDemo1">
+            <div class="panel-heading" ng-class="{'panel-heading-collapsed':panelDemo1}">
+               User Configuration
+               <paneltool tool-collapse="tool-collapse"></paneltool>
+            </div>
+            <div class="panel-wrapper" uib-collapse="panelDemo1">
+               <div class="panel-body">
+                  <div class="row">
+                     <div class="col-lg-12">
+                        <div class="form-group" ng-disabled="vm.config" ng-class="{false:'has-error'}[vm.seasonalFilterForm.IsnameValid]">
+                           <label class="control-label small">Name</label>
+                           <input name="inputName" ng-disabled="vm.disableConfig" ng-model="vm.config.name" placeholder="Season name/ configuration name" type="text" class="form-control input-sm">
+                           <small ng-show="!vm.seasonalFilterForm.IsnameValid" class="help-block">Name is required.
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="row">
+                     <div class="col-lg-6">
+                        <div class="form-group" ng-class="{false:'has-error'}[vm.seasonalFilterForm.IsfromDateValid]">
+                           <label>From Date</label>
+                           <span ng-show="vm.visibility.showWarning" class="control-label required" aria-required="true">*</span>
+                           <p class="input-group">
+                              <input class="form-control" type="text" ng-required="true" uib-datepicker-popup="{{vm.dtOption.format}}" ng-model="vm.config.fromDate" ng-disabled="vm.disableConfig" is-open="vm.dtOption.fromPopup.opened" datepicker-options="vm.dtOption.dateOptions" close-text="Close"
+                              alt-input-formats="vm.dtOption.altInputFormats" />
+                              <span class="input-group-btn">
+                                 <button type="button" class="btn btn-default" ng-click="vm.dtOption.fromOpen()">
+                                    <i class="fa fa-calendar"></i>
+                                 </button>
+                              </span>
+                           </p>
+                           <small ng-show="!vm.seasonalFilterForm.IsfromDateValid" class="help-block">From Date is required.
+                           </small>
+                        </div>
+                     </div>
+                     <div class="col-lg-6">
+                        <div class="form-group" ng-class="{false:'has-error'}[vm.seasonalFilterForm.IstoDateValid]">
+                           <label>To Date</label>
+                           <span ng-show="vm.visibility.showWarning" class="control-label required" aria-required="true">*</span>
+                           <p class="input-group">
+                              <input class="form-control" type="text" ng-required="true" uib-datepicker-popup="{{vm.dtOption.format}}" ng-model="vm.config.toDate" ng-disabled="vm.disableConfig" is-open="vm.dtOption.popup.opened" datepicker-options="vm.dtOption.dateOptions" close-text="Close"
+                              alt-input-formats="vm.dtOption.altInputFormats" />
+                              <span class="input-group-btn">
+                                 <button type="button" class="btn btn-default" ng-click="vm.dtOption.open()">
+                                    <i class="fa fa-calendar"></i>
+                                 </button>
+                              </span>
+                           </p>
+                           <small ng-show="!vm.seasonalFilterForm.IstoDateValid" class="help-block">To Date is required.
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <p class="col-md-4 pull-right">
+                        <button ng-disabled="vm.disableConfig" class="btn btn-success btn-block" ng-click="vm.saveUserConfig()" type="button">
+                           Ok
+                        </button>
+                     </p>
+                     <p class="col-md-4 pull-left">
+                        <button class="btn btn-default btn-block" ng-click="vm.resetConfig()" type="button">
+                           Reset
+                        </button>
+                     </p>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+
+<div ng-show="vm.visibility.ConfigExists" class="row clearfix">
+   <div class="col-xs-12 col-md-6 col-lg-6" ng-repeat="branch in vm.branches">
+      <div class="panel panel-success">
+         <div class="panel-heading">
+            <div class="panel-title">{{branch.name}}</div>
+         </div>
+         <div class="panel-body bb">
+            <div class="row text-center">
+               <div class="col-xs-6" ng-show="branch.vegitationIndex.image_url">
+                  <p class="text-bold text-center text-gray-dark">
+                     <i class="fa fa-leaf fa-lg"> </i> Vegetation Index
+                  </p>
+                  <a target="_blank" ng-href="{{branch.vegitationIndex.chart_url}}">
+                     <img ng-src="{{branch.vegitationIndex.image_url}}" class="img-rounded" />
+                  </a>
+               </div>
+               <div class="col-xs-6" ng-show="branch.rainfall.image_url">
+                  <p class="text-bold text-center text-gray-dark">
+                     <i class="fa fa-umbrella fa-lg"> </i> Rainfall</p>
+                  <a target="_blank" ng-href="{{branch.rainfall.chart_url}}">
+                     <img ng-src="{{branch.rainfall.image_url}}" class="img-rounded" />
+                  </a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<div ng-show="!vm.visibility.ConfigExists" class="row clearfix">
+   <h4 class="centerPageText-lg">
+      Seasonal Monitoring Config Not Found!
+      <p>PLEASE Setup your Configuration to get vegetation index and rainfall seasonal monitoring information
+         <i class="fa fa-arrow-circle-up"></i>
+      </p>
+      <a></a>
+   </h4>
+</div>
+

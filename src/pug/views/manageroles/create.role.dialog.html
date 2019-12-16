@@ -1,0 +1,129 @@
+<md-dialog style="min-width: 800px">
+        <md-toolbar class="small">
+            <div class="md-toolbar-tools small">
+                <h2>Role</h2>
+                <span flex></span>
+                <md-button aria-label="button" class="md-icon-button" ng-click="vm.cancel()">
+                    <i class="icon-close"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content style="width:800px;max-height:500px;">
+            <md-content class="md-padding" block-ui="RoleLoadingBlockUI">
+                <form class="mb-xl"  name="vm.roleForm" ng-submit="vm.addRole()"  block-ui="RoleBlockUI">
+                    <div class="row">
+                        <div ng-show="!vm.showFilter" ng-class="vm.showFilter?'col-lg-40':'col-lg-4'" style="max-height: 120px;">
+                            <!-- START widget-->
+                            <div class="panel widget">
+                                <div class="panel-body">
+                                    <div class="col col-lg">
+                                        <div class="pr-lg">
+                                            <div class="form-group">
+                                                <input class="form-control" ng-trim="true" type="text" ng-model="vm.role.name" placeholder="Role Name.." required="required"
+                                                />
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" ng-trim="true" ng-model="vm.role.description" placeholder="Type a description.." rows="8"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <small ng-if="vm.isEdit">has <strong>{{( vm.role.permissions.length/vm.permissions.length)*100 | number:0}} % </strong> of the total permissions</small>
+                                    <uib-progressbar ng-if="vm.isEdit" class="progress-striped progress-xs" value="( vm.role.permissions.length/vm.permissions.length)*100" type="info">
+                                        {{( vm.role.permissions.length/vm.permissions.length)*100 | number:0}} %  </uib-progressbar>
+                                </div>
+                            </div>
+                            <!-- END widget-->
+                        </div>
+                        <div ng-class="vm.showFilter?'col-lg-6':'col-lg-8'">
+                            <div class="lead text-muted text-center" ng-show="!vm.permissions">No Permissions found...</div>
+                            <div class="panel panel-default" ng-hide="!vm.permissions">
+                                <div class="panel-heading">
+                                    <!--<div class="pull-right label label-danger">{{ vm.permissions.length }}</div>-->
+                                    <!--<div class="pull-right label label-success">{{ vm.role.permissions.length }}</div>-->
+                                    <div class="pull-right">
+                                        <md-button id="roleFilterButton" class="md-icon-button no-padding no-margin"
+                                                   aria-label="Refresh"
+                                                   ng-click="vm.showFilterDialog(vm.showFilter)">
+                                            <md-tooltip md-direction="bottom">Filter By Modules</md-tooltip>
+                                            <i class="icon-equalizer" style="font-size: 14px"></i>
+                                        </md-button>
+                                    </div>
+                                    <div class="panel-title">Permissions</div>
+
+                                </div>
+                                <!-- START panel footer-->
+                                <div class="panel-heading clearfix">
+                                    <div class="input-group">
+                                        <input class="form-control input-sm" ng-model="vm.search" type="text" placeholder="Search permissions .." />
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default btn-sm" type="submit">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <!-- END panel-footer-->
+
+                                <!-- START list group-->
+                                <div class="list-group" height="180">
+                                    <!-- START list group item-->
+                                    <div class="list-group-item" ng-repeat="permission in vm.permissions | filter : vm.search">
+                                        <div class="media-box">
+                                            <div class="media-box-body clearfix">
+                                                <strong class="media-box-heading">
+                                                    <label class="mda-checkbox">
+                                                        <input type="checkbox" ng-model="permission.checked">
+                                                        <em class="bg-green-500"></em>{{ permission.name }}</label>
+                                                </strong>
+                                                <p class="mb-sm">
+                                                    <span ng-class="vm.changeModuleStyle(permission.module)">{{permission.module}}</span>
+                                                    <small>{{ permission.description | ReplaceUnderscore}}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END list group item-->
+                                </div>
+                                <!-- END list group-->
+                            </div>
+                        </div>
+                        <div ng-show="vm.showFilter" ng-class="vm.showFilter?'col-lg-4':''" style="max-height: 120px;">
+                            <!-- START widget-->
+                            <div class="panel widget">
+                                <div class="panel-body">
+                                    <div class="col col-lg">
+                                        <div class="pr-lg">
+                                            <div class="form-group">
+                                                <input class="form-control" ng-trim="true" type="text" ng-model="vm.role.name" placeholder="Role Name.." required="required"
+                                                />
+                                            </div>
+                                            <div class="form-group">
+                                                <textarea class="form-control" ng-trim="true" ng-model="vm.role.description" placeholder="Type a description.." rows="8"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <small ng-if="vm.isEdit">has <strong>{{( vm.role.permissions.length/vm.permissions.length)*100 | number:0}} % </strong> of the total permissions</small>
+                                    <uib-progressbar ng-if="vm.isEdit" class="progress-striped progress-xs" value="( vm.role.permissions.length/vm.permissions.length)*100" type="info">
+                                        {{( vm.role.permissions.length/vm.permissions.length)*100 | number:0}} %  </uib-progressbar>
+                                </div>
+                            </div>
+                            <!-- END widget-->
+                        </div>
+                    </div>
+
+                </form>
+            </md-content>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <div layout="row" layout-align="start" flex>
+                <md-button class="md-raised md-button-small md-ink-ripple" ng-click="vm.cancel()">
+                    Cancel
+                </md-button>
+            </div>
+            <md-button class="md-raised md-primary md-button-small md-ink-ripple pull-right" ng-click="vm.saveRole()">
+                <i class="fa fa-save"></i> {{vm.isEdit? 'Update':'Save'}}
+            </md-button>
+        </md-dialog-actions>
+</md-dialog>

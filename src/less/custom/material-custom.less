@@ -1,0 +1,114 @@
+md-toolbar {
+  box-sizing: border-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+  font-size: 20px;
+  min-height: 50px;
+  width: 100%;
+}
+md-toolbar.small {
+  box-sizing: border-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
+  font-size: 14px;
+  min-height: 36px;
+  width: 100%;
+}
+
+.md-toolbar-tools {
+  font-size: 16px;
+  letter-spacing: 0.005em;
+  box-sizing: border-box;
+  font-weight: 300;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  height: 40px !important;
+  max-height: 64px;
+  padding: 12px 4px 0px 3px !important;
+  margin: 0;
+}
+.md-toolbar-tools.small {
+  font-size: 16px;
+  letter-spacing: 0.005em;
+  box-sizing: border-box;
+  font-weight: 500;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  height: 40px !important;
+  max-height: 64px;
+  padding: 12px 16px 11px 24px !important;
+  margin: 0;
+}
+
+.md-dialog-container{
+  pointer-events: none !important;
+}
+
+md-dialog{
+  pointer-events: all !important;
+}
+
+.md-button-small{
+  min-height: 26px;
+  font-size: 12px;
+  line-height:26px;
+}
+.md-button-xsmall{
+  min-height: 8px;
+  font-size: 11px;
+  line-height: 25px;
+}
+
+.md-button.md-default-theme.md-primary.md-fab:not([disabled]),
+.md-button.md-primary.md-fab:not([disabled]),
+.md-button.md-default-theme.md-primary.md-raised:not([disabled]),
+.md-button.md-primary.md-raised:not([disabled])
+{
+  background-color: @brand-success;
+}
+
+
+.md-table-pagination>.buttons>.label {
+  margin-left: 20px;
+  color: rgba(0, 0, 0, .54);
+}
+
+.page-select>.label {
+  color: rgba(0, 0, 0, .54);
+}
+
+.limit-select>.label {
+  color: rgba(0, 0, 0, .54);
+}
+
+.md-toolbar-tools.small {
+  background-color: @brand-success;
+}

@@ -1,0 +1,49 @@
+<md-dialog style="min-width: 500px">
+    <md-toolbar class="small">
+        <div class="md-toolbar-tools small">
+            <h2>{{vm.isEdit? 'Edit ':'Add '}}Crop</h2>
+            <span flex></span>
+            <md-button aria-label="button" class="md-icon-button" ng-click="vm.cancel()">
+                <i class="icon-close"></i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content style="width:500px;max-height:500px;">
+        <md-content class="md-padding">
+            <form class="mb-xl" name="cropForm" ng-submit="vm.addCrop()" block-ui="CropBlockUI">
+                <div class="form-group" ng-class="{false:'has-error'}[vm.cropForm.IsnameValid]">
+                    <label>Name *</label>
+                    <input id="name" name="name" ng-model="vm.crop.name" type="text"
+                           class="form-control required ng-pristine ng-valid ng-not-empty ng-touched"
+                           aria-invalid="false">
+                    <small ng-show="!vm.cropForm.IsnameValid" class="help-block ng-hide"
+                           aria-hidden="true">Name is required.
+                    </small>
+                </div>
+                <div class="form-group" ng-class="{false:'has-error'}[vm.cropForm.IscategoryValid]">
+                    <label>Category *</label>
+                    <input id="cropCategory" name="cropCategory" ng-model="vm.crop.category"
+                           type="text" class="form-control required ng-pristine ng-valid ng-not-empty ng-touched"
+                           aria-invalid="false">
+                    <small ng-show="!vm.cropForm.IscategoryValid" class="help-block ng-hide"
+                           aria-hidden="true">Category is required.
+                    </small>
+                </div>
+
+
+            </form>
+        </md-content>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <div layout="row" layout-align="start" flex>
+            <md-button class="md-raised md-button-small md-ink-ripple" ng-click="vm.cancel()">
+                Cancel
+            </md-button>
+        </div>
+        <md-button class="md-raised md-primary md-button-small md-ink-ripple pull-right" ng-click="vm.saveCrop()">
+            <i class="fa fa-save"></i> {{vm.isEdit? 'Update':'Save'}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

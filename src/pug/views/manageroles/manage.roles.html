@@ -1,0 +1,50 @@
+
+
+<h3>Manage Roles
+    <small>Manage user roles and permissions.</small>
+</h3>
+
+<!-- ngRepeat + ngResource-->
+<div class="panel panel-default">
+    <div class="panel-heading">Roles </div>
+    <div class="panel-body">
+        <div class="row" userpermission="'USER_MANAGEMENT_ROLE_CREATE'">
+            <div class="col-xs-10 col-lg-12">
+                <p><a class="btn btn-success pull-right" href="" ng-click="vm.addRole()">
+                    <i class="fa fa-plus"></i>
+                    Add Role</a>
+                </p>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-lg-12" ng-show="vm.visibility.loading === true">
+                <md-progress-linear md-mode="indeterminate" ></md-progress-linear>
+                <div class="alert small alert-info">fetching data.....</div>
+            </div>
+            <div class="col-lg-12">
+                <table class="row-border hover" datatable="ng">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Permissions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="role in vm.roles">
+                        <td>{{ $index + 1 }}</td>
+                        <td>{{role.name}}</td>
+                        <td>{{role.description }}</td>
+                        <td>
+                            <a userpermission="['USER_MANAGEMENT_ROLE_CREATE','USER_MANAGEMENT_ROLE_UPDATE']"
+                               ng-click="vm.editRole(role,$event)"> <i class="fa fa-edit"></i>{{role.permissions.length}}  Permissions </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

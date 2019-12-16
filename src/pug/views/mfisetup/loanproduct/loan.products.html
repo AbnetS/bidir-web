@@ -1,0 +1,51 @@
+<h3>Manage Loan Products
+    <small>create ,edit , delete loan products.</small>
+</h3>
+
+
+<div class="panel panel-default" userpermission="['MFI_SETUP_LOAN_PRODUCT_VIEW','MFI_SETUP_LOAN_PRODUCT_CREATE','MFI_SETUP_LOAN_PRODUCT_UPDATE']">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-10 col-lg-12" userpermission="['MFI_SETUP_LOAN_PRODUCT_CREATE']">
+                <p><a class="btn btn-success pull-right" ng-click="vm.addLoanProduct(null,$event)">
+                    <i class="fa fa-plus"></i>
+                    Add</a>
+                </p>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-lg-12">
+                <md-table-container>
+                    <table md-table >
+                        <thead  md-head>
+                        <tr md-row>
+                            <th></th>
+                            <th md-column ><span>No</span></th>
+                            <th md-column ><span>Name</span></th>
+                            <th md-column ><span>Max Amount</span></th>
+                            <th md-column ><span>Currency</span></th>
+                            <th md-column ><span>Action</span></th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row ng-repeat="lproduct in vm.loanProducts">
+                            <td></td>
+                            <td md-cell>{{$index + 1}}</td>
+                            <td md-cell>{{lproduct.name}}</td>
+                            <td md-cell>{{lproduct.maximum_loan_amount}}</td>
+                            <td md-cell>{{lproduct.currency}}</td>
+                            <td md-cell>
+                                <a userpermission="['MFI_SETUP_LOAN_PRODUCT_UPDATE']"
+                                   ng-click="vm.editLoanProduct(lproduct,$event)">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+            </div>
+        </div>
+    </div>
+</div>
