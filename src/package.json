@@ -9,7 +9,7 @@
     "connect-history-api-fallback": "1.5.0",
     "del": "2.2.2",
     "express": "4.15.2",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-angular-htmlify": "2.3.0",
     "gulp-angular-templatecache": "2.0.0",
     "gulp-changed": "2.0.0",
